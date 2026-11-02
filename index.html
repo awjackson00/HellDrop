@@ -148,7 +148,7 @@
       <div class="ownership-toolbar"><label class="ownership-search"><span aria-hidden="true">⌕</span><input type="search" id="ownership-search" placeholder="Search Warbonds..." aria-label="Search owned equipment" autocomplete="off"></label><div class="ownership-tally" id="ownership-tally">0 OWNED</div></div>
       <div class="ownership-actions" id="ownership-actions"><span id="ownership-context">Starter gear and Helldivers Mobilize! are included by default.</span><div class="ownership-batch"><button type="button" id="ownership-select-all">SELECT ALL</button><button type="button" id="ownership-clear">CLEAR PREMIUMS</button></div></div>
       <div class="ownership-content" id="ownership-content" aria-live="polite"></div>
-      <div class="ownership-bottom"><span>Selections are saved on this device. Mark only the gear you have unlocked or purchased.</span><button class="ownership-done" type="button" data-close-dialog>APPLY & CLOSE →</button></div>
+      <div class="ownership-bottom"><span>✓ AUTO-SAVED IN THIS BROWSER. Your Warbonds, Superstore purchases and individual unlocks will be remembered on return.</span><button class="ownership-done" type="button" data-close-dialog>APPLY & CLOSE →</button></div>
     </section>
   </div>
 
@@ -875,8 +875,9 @@
     $('#result-subtitle').textContent='A complete, compatible deployment.';
     $('#deployment-state').classList.add('ready');
     $('#deployment-state').innerHTML='<span class="state-led"></span> READY';
+    const equipmentSlots = String(2 + extras.length).padStart(2,'0');
     $('#result-area').innerHTML=`<div class="loadout-header"><span>LOADOUT ASSIGNMENT</span><span class="loadout-id">${esc(new Date(result.createdAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}))}</span></div>
-      <div class="deployment-columns"><div class="kit-col"><div class="column-label">EQUIPMENT <span>05 SLOTS</span></div><div class="kit-list">${equipmentCard(result.primary,'primary','PRIMARY WEAPON','wide')}${equipmentCard(result.secondary,'secondary','SECONDARY WEAPON','wide')}${extras.join('')}</div></div><div class="strat-col"><div class="column-label">STRATAGEMS <span>04 SLOTS</span></div><div class="strat-list">${result.stratagems.map(stratCard).join('')}</div></div></div>`;
+      <div class="deployment-columns"><div class="kit-col"><div class="column-label">EQUIPMENT <span>${equipmentSlots} SLOTS</span></div><div class="kit-list">${equipmentCard(result.primary,'primary','PRIMARY WEAPON','wide')}${equipmentCard(result.secondary,'secondary','SECONDARY WEAPON','wide')}${extras.join('')}</div></div><div class="strat-col"><div class="column-label">STRATAGEMS <span>04 SLOTS</span></div><div class="strat-list">${result.stratagems.map(stratCard).join('')}</div></div></div>`;
     $('#result-actions').hidden=false;
     $('#equipment-counter').textContent=passed?'COMPATIBILITY CHECK: PASS':'COMPATIBILITY CHECK: ERROR';
   }
@@ -884,6 +885,25 @@
     ensureSelected();
     try { result = Core.generateLoadout(availableCatalog(),selection,options);renderResult(); }
     catch(error){showToast(error.message || 'Unable to generate deployment.');}
+  }
+  // An optional-slot toggle changes only that slot, never the rest of the roll.
+  // A disabled slot is remembered in memory so switching it back on restores
+  // the exact same equipment when it is still available in the owned arsenal.
+  function setOptionalSlot(type, enabled) {
+    if (!result) return;
+    const pool = availableCatalog()[type === 'armor' ? 'armors' : 'boosters'] || [];
+    result.hiddenOptions ||= {};
+    if (!enabled) {
+      if (result[type]) result.hiddenOptions[type] = result[type];
+      result[type] = null;
+    } else {
+      const previous = result[type] || result.hiddenOptions[type];
+      result[type] = pool.find(item => item.id === previous?.id) ||
+        (pool.length ? pool[Math.floor(Math.random() * pool.length)] : null);
+      delete result.hiddenOptions[type];
+      if (!result[type]) showToast(`No owned ${type} available. Check Your Arsenal.`);
+    }
+    renderResult();
   }
   function reroll(slot) {
     try {result=Core.rerollSlot(result,slot,availableCatalog());renderResult();}
@@ -976,7 +996,7 @@
     ['armor','booster'].forEach(type=>$('#option-'+type).addEventListener('change',event=>{
       options[type==='armor'?'includeArmor':'includeBooster']=event.target.checked;
       try{localStorage.setItem(optionKey,JSON.stringify(options));}catch{}
-      if(result)generate();
+      setOptionalSlot(type,event.target.checked);
     }));
     $('#picker-search').addEventListener('input',event=>{searchTerm=event.target.value;drawPicker();});
     $('#picker-filters').addEventListener('click',event=>{const chip=event.target.closest('[data-filter]');if(!chip)return;activeFilter=chip.dataset.filter;drawPicker();});
