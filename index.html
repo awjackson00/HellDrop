@@ -6,14 +6,14 @@
   <meta name="theme-color" content="#0a0d11" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <meta name="description" content="Pick one Helldivers 2 item, then randomize a complete compatible loadout with official-style gear art, Warbond filtering, and no conflicting stratagems." />
-  <title>HELLDROP | Hellpod Loadout Randomizer</title>
+  <title>HELLDROP | Helldivers 2 Loadout Randomizer</title>
   <link rel="preconnect" href="https://helldivers-api.dionatha.com.br" crossorigin />
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 :root{--bg:#0a0d11;--surface:#10151b;--surface-2:#131a22;--surface-3:#19212a;--edge:#25303a;--edge-strong:#48586a;--ink:#edf0ec;--muted:#a3adb5;--dim:#73808b;--yellow:#f1d034;--yellow-wash:#2a2410;--green:#a4c6b0;--body:'Inter',Arial,sans-serif;--display:'Barlow Condensed',Arial Narrow,sans-serif;--mono:'IBM Plex Mono',Consolas,monospace}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(circle at top,#152334 0,#0d1116 28%,#090c10 68%,#07090c 100%);font-family:var(--body);-webkit-font-smoothing:antialiased}body:before{content:'';position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 18%),repeating-linear-gradient(90deg,transparent 0 95px,rgba(255,255,255,.018) 95px 96px);opacity:.22}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}a{color:inherit}a:hover{color:var(--yellow)}::selection{background:var(--yellow);color:#141515}[hidden]{display:none!important}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
 .app-shell{width:min(calc(100% - 72px),1380px);margin:0 auto;padding-bottom:24px}
-.topbar{height:84px;display:flex;align-items:center;gap:34px;border-bottom:1px solid var(--edge);position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(9,12,16,.96),rgba(9,12,16,.9));backdrop-filter:blur(10px)}.brand{display:flex;align-items:center;gap:14px;text-decoration:none;flex:none}.brand-mark{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid #5e5220;background:linear-gradient(180deg,#171d24,#11161c);box-shadow:inset 0 0 0 1px rgba(255,255,255,.03)}.brand-mark svg{width:31px;height:31px;display:block}.brand-name{display:block;font:800 31px/.82 var(--display);letter-spacing:.01em;color:#fff}.brand-name>span{color:#fff}.brand-name small{display:block;font:500 8px/1.45 var(--mono);color:#9facb5;letter-spacing:.05em;margin-top:8px}.main-nav{display:flex;align-items:stretch;gap:28px;height:100%;margin:0 auto 0 clamp(10px,4vw,58px)}.nav-link{padding:6px 0 0;position:relative;background:transparent;border:0;display:flex;align-items:center;justify-content:center;gap:9px;color:#aeb8bf;text-decoration:none;font:700 11px var(--body);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}.nav-link:after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:transparent}.nav-link.active{color:var(--yellow)}.nav-link.active:after{background:var(--yellow)}.nav-link:hover{color:#fff}.nav-count{font:600 10px var(--mono);color:#e0ca62;border:1px solid #73692f;padding:3px 5px;background:#1f1a0d}.top-pill{display:flex;align-items:center;gap:9px;flex:none;color:#91a0a8;font:500 9px var(--mono);text-transform:uppercase;white-space:nowrap}.online-led,.state-led{width:6px;height:6px;border-radius:50%;background:#788184;display:inline-block;flex:none}.top-pill.connected .online-led{background:var(--green)}
+.topbar{height:84px;display:flex;align-items:center;gap:34px;border-bottom:1px solid var(--edge);position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(9,12,16,.96),rgba(9,12,16,.9));backdrop-filter:blur(10px)}.brand{display:flex;align-items:center;gap:14px;text-decoration:none;flex:none}.brand-mark{width:43px;height:51px;display:flex;align-items:center;justify-content:center;flex:none;background:transparent}.brand-mark svg{width:42px;height:49px;display:block;overflow:visible}.brand-name{display:block;font:800 31px/.82 var(--display);letter-spacing:.01em;color:#fff}.brand-name>span{color:#fff}.brand-name small{display:block;font:500 8px/1.45 var(--mono);color:#9facb5;letter-spacing:.05em;margin-top:8px}.main-nav{display:flex;align-items:stretch;gap:28px;height:100%;margin:0 auto 0 clamp(10px,4vw,58px)}.nav-link{padding:6px 0 0;position:relative;background:transparent;border:0;display:flex;align-items:center;justify-content:center;gap:9px;color:#aeb8bf;text-decoration:none;font:700 11px var(--body);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}.nav-link:after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:transparent}.nav-link.active{color:var(--yellow)}.nav-link.active:after{background:var(--yellow)}.nav-link:hover{color:#fff}.nav-count{font:600 10px var(--mono);color:#e0ca62;border:1px solid #73692f;padding:3px 5px;background:#1f1a0d}.top-pill{display:flex;align-items:center;gap:9px;flex:none;color:#91a0a8;font:500 9px var(--mono);text-transform:uppercase;white-space:nowrap}.online-led,.state-led{width:6px;height:6px;border-radius:50%;background:#788184;display:inline-block;flex:none}.top-pill.connected .online-led{background:var(--green)}
 .hero{display:flex;justify-content:space-between;align-items:end;gap:30px;padding:30px 0 26px;border-bottom:1px solid var(--edge)}.hero-copy{max-width:900px}.eyebrow,.section-kicker,.field-label,.tiny-note{font:500 10px/1.5 var(--mono);letter-spacing:.045em;color:#95a2a9}.eyebrow{display:flex;gap:9px;align-items:center;color:#d8c45f}.eyebrow-line{width:18px;height:2px;background:var(--yellow)}.serial{color:#71808a;font-size:9px}.hero h1{margin:10px 0 7px;font:800 clamp(34px,3.4vw,48px)/.98 var(--display);text-transform:uppercase;letter-spacing:.015em}.hero h1 span{color:var(--yellow)}.hero h1 em{font-style:normal}.hero p{margin:0;color:#afbac1;font-size:13px;line-height:1.7;max-width:690px}.hero-aside{display:none}
 .main-grid{display:grid;grid-template-columns:minmax(320px,380px) minmax(0,1fr);gap:24px;padding:28px 0 24px;align-items:stretch}.panel{min-width:0;background:linear-gradient(180deg,rgba(20,27,34,.94),rgba(13,18,24,.94));border:1px solid var(--edge);box-shadow:0 14px 38px rgba(0,0,0,.25),inset 0 0 0 1px rgba(255,255,255,.015)}.config-panel{padding:24px}.result-panel{min-height:600px;display:flex;flex-direction:column;padding:24px}.panel-heading{display:flex;justify-content:space-between;align-items:start;gap:14px;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid var(--edge)}.panel-heading h2{font:800 25px/1 var(--display);letter-spacing:.015em;text-transform:uppercase;margin:5px 0 5px}.panel-heading p{margin:0;font-size:11px;line-height:1.5;color:#8f9ba2}.section-kicker{font-size:9px;color:#c7b45b}.heading-index{display:none}.field-label{font-weight:600;color:#bdc7cd;font-size:10px;margin:18px 0 10px}.type-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.type-tab{display:flex;align-items:center;justify-content:center;gap:7px;background:#10161c;color:#b7c0c6;border:1px solid #34414c;min-height:46px;padding:8px 6px;font:700 12px var(--body);border-radius:2px;transition:border-color .15s,color .15s,background .15s}.type-tab:hover{border-color:#7f8b93;color:#fff}.type-tab.active{border-color:var(--yellow);color:var(--yellow);background:linear-gradient(180deg,#1a1b16,#14181d)}.tab-number{display:none}.tab-symbol{font-size:17px;line-height:1}.picked-item{width:100%;min-height:84px;display:flex;align-items:center;gap:12px;text-align:left;padding:8px 10px 8px 8px;background:#0f151b;border:1px solid #35424e;border-radius:2px;color:var(--ink)}.picked-item:hover{border-color:var(--yellow)}.picked-visual{width:92px;height:66px;flex:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#131c24,#0d1218);overflow:hidden;border:1px solid #24303a}.picked-copy{display:flex;flex-direction:column;align-items:start;min-width:0;flex:1;gap:4px}.picked-copy small{color:var(--yellow);font:600 9px var(--mono);letter-spacing:.045em}.picked-copy b{font:700 15px/1.2 var(--body);overflow-wrap:anywhere}.picked-copy>span{font:400 10px/1.3 var(--body);color:#9dabb2;overflow-wrap:anywhere}.picked-arrow{color:var(--yellow);font-size:23px;line-height:1}.browse-btn{display:none}.ownership-button{width:100%;display:flex;align-items:center;gap:12px;margin-top:18px;padding:14px 0;border:0;border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);background:transparent;text-align:left;color:var(--ink)}.ownership-button:hover .ownership-copy strong{color:var(--yellow)}.ownership-icon{flex:none;width:34px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid #6f6328;background:#1b1b14;color:var(--yellow);font-size:17px}.ownership-copy{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}.ownership-copy small{font:500 8px var(--mono);color:#97a3aa;letter-spacing:.04em}.ownership-copy strong{font-size:12px;font-weight:700}.ownership-copy>span{font-size:10px;line-height:1.25;color:#8f9ba1}.ownership-action{font:600 10px var(--mono);color:var(--yellow);white-space:nowrap}.panel-divider{display:none}.options-heading{display:flex;justify-content:space-between;align-items:end}.options-heading .field-label{margin:22px 0 9px}.tiny-note{font-size:8px;color:#6e7a82}.switch-row{display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;padding:10px 0;cursor:pointer}.switch-row>span{display:flex;flex-direction:column;gap:4px}.switch-row strong{font-size:12px;font-weight:600}.switch-row small{font-size:10px;color:#85939b}.switch-row input{position:absolute;opacity:0;right:0;width:37px;height:24px}.switch{display:block;width:36px;height:20px;border:1px solid #56636c;border-radius:12px;background:#323b43;position:relative;flex:none;transition:background .15s}.switch:before{content:'';width:12px;height:12px;background:#d6dbd7;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .15s}.switch-row input:checked+.switch{background:var(--yellow);border-color:var(--yellow)}.switch-row input:checked+.switch:before{background:#101214;transform:translateX(16px)}.switch-row input:focus-visible+.switch{outline:2px solid var(--yellow);outline-offset:3px}.rules-box{display:flex;gap:9px;align-items:start;padding:12px 0;margin:10px 0 13px;border-top:1px solid var(--edge);color:#95a2a8}.rules-led{width:5px;height:5px;border-radius:50%;background:#95c6a4;margin-top:4px;flex:none}.rules-box p{margin:0;font:400 10px/1.6 var(--body)}.generate-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:54px;border:1px solid #ecd75d;border-radius:2px;color:#111417;background:linear-gradient(180deg,#f1d034,#e0b922);font:800 13px var(--body);letter-spacing:.04em;transition:filter .15s,transform .05s}.generate-btn:hover{filter:brightness(1.04)}.generate-btn:active{transform:translateY(1px)}.gen-icon{font-size:22px;font-weight:400}.gen-arrow{margin-left:auto;margin-right:7px;font-size:19px;font-weight:400}.keyboard-hint{text-align:center;font:400 8px/1.5 var(--mono);color:#73808a;margin:12px 0 0}.keyboard-hint kbd{border:1px solid #495660;padding:1px 3px;font:inherit;color:#c6cdd0}
 .result-heading{margin-bottom:0}.deployment-state{display:flex;align-items:center;gap:7px;border:1px solid #42505c;padding:6px 9px;font:600 10px var(--mono);color:#aeb9bf;background:#11171d}.deployment-state.ready{border-color:#84752b;color:var(--yellow);background:#1f1d12}.deployment-state.ready .state-led{background:var(--yellow)}#result-area{flex:1;min-width:0}.loadout-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--edge);padding:12px 0 11px;color:#8e9ba2;font:500 9px var(--mono);letter-spacing:.03em}.loadout-id{color:#697783}.deployment-columns{display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);gap:24px;min-width:0}.kit-col,.strat-col{min-width:0}.column-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:18px 0 7px;font:700 11px var(--body);color:#ecf0ee;text-transform:uppercase;letter-spacing:.04em}.column-label>span{font:500 9px var(--mono);color:#7d8a93}.kit-list,.strat-list{display:grid;gap:8px}.equipment-card,.strat-card{display:flex;align-items:center;min-width:0;min-height:82px;padding:8px 10px;background:linear-gradient(180deg,#10161d,#0e141a);border:1px solid #25313b;gap:12px;position:relative}.equipment-card.locked,.strat-card.locked{border-color:#7a6f30;background:linear-gradient(180deg,#171913,#11161c)}.equipment-image{width:110px;height:68px;display:flex;align-items:center;justify-content:center;flex:none;background:linear-gradient(180deg,#131c24,#0d1218);overflow:hidden;border:1px solid #24303a}.equipment-image img{width:100%;height:100%;object-fit:contain;display:block}.equipment-card.wide .equipment-image{width:118px}.equipment-card.compact .equipment-image{width:92px;height:62px}.equipment-copy{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:5px;flex:1;padding:2px 0}.equipment-copy small,.snum{color:#9eadb5;font:600 9px/1.2 var(--mono);letter-spacing:.035em;text-transform:uppercase}.equipment-copy strong,.strat-copy strong{font:700 12px/1.3 var(--body);overflow-wrap:anywhere}.equipment-card.wide .equipment-copy strong{font-size:13px}.source-line{color:#71808a;font-size:10px;line-height:1.25}.slot-end{flex:none;align-self:center;min-width:21px;display:flex;align-items:center;justify-content:flex-end;margin-right:1px}.card-reroll{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid #44515d;color:#b5bfc2;background:transparent;border-radius:2px;font-size:21px;line-height:1}.card-reroll:hover{border-color:var(--yellow);color:var(--yellow)}.locked-tag{font:700 9px var(--mono);color:var(--yellow);letter-spacing:.03em;text-transform:uppercase}.strat-card{min-height:82px}.strat-art{width:68px;height:68px;display:flex;align-items:center;justify-content:center;flex:none;background:#121a21;overflow:hidden;border:1px solid #30404d}.strat-art img{width:100%;height:100%;object-fit:contain}.strat-card.kind-orbital .strat-art,.strat-card.kind-eagle .strat-art{background:#24181b;border-color:#4b3337}.strat-card.kind-backpack .strat-art,.strat-card.kind-support .strat-art{background:#11202b;border-color:#2f4a5b}.strat-copy{display:flex;flex-direction:column;justify-content:center;min-width:0;gap:6px;flex:1}.strat-copy strong{font-size:12px}.strat-badges{display:flex;flex-wrap:wrap;gap:4px}.tag{display:inline-block;color:#90a1aa;border:1px solid #344450;font:500 8px var(--mono);padding:2px 4px;background:#11161c}.strat-card.locked{box-shadow:inset 0 0 0 1px rgba(241,208,52,.18)}.result-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 16px}.secondary-btn{background:#10161c;border:1px solid #44505b;min-height:42px;color:#e1e5e5;font:700 11px var(--body);border-radius:2px;text-transform:uppercase;letter-spacing:.04em}.secondary-btn:hover{border-color:var(--yellow);color:var(--yellow)}.result-footer{display:flex;justify-content:space-between;gap:10px;padding:14px 0 0;border-top:1px solid var(--edge);color:#71808a;font:500 8px/1.5 var(--mono);text-transform:uppercase}.result-footer #equipment-counter{color:#a8bbac}.empty-result{min-height:405px;display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column;gap:13px;color:#73818a}.target-reticle{color:#c2ae45;font-size:58px;line-height:1;font-family:var(--display)}.empty-result h3{color:#d7dddc;font:800 27px/1.15 var(--display);text-transform:uppercase;margin:0}.empty-result p{max-width:330px;margin:0;font-size:12px;line-height:1.7}.underbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 26px;padding:14px 18px;border:1px solid var(--edge);background:linear-gradient(180deg,rgba(16,22,28,.85),rgba(13,18,24,.85))}.underbar-index{flex:none;color:var(--yellow);font:600 9px var(--mono)}.underbar p{color:#98a3a3;margin:0;font-size:10px;line-height:1.5;flex:1}.underbar-stamp{color:#a5c5a5;font:700 12px var(--mono)}.site-footer{display:flex;justify-content:space-between;gap:24px;padding:0 0 12px;color:#6c7983;font:400 9px/1.5 var(--mono)}.site-footer span:last-child{text-align:right;max-width:750px}
@@ -25,7 +25,7 @@
 .about-dialog{position:relative;padding:32px 34px;max-width:610px;overflow-y:auto;display:block}.about-close{position:absolute;right:19px;top:17px}.about-dialog h2{font:700 36px/1.07 var(--display);margin:14px 30px 14px 0;text-transform:uppercase}.about-dialog p{font-size:12px;line-height:1.8;color:#aeb9b9}.about-rules{border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);padding:18px 0;margin:20px 0}.about-rules>strong{font:700 11px var(--body);color:var(--yellow)}.about-rules p{margin:10px 0}.about-action{margin-top:23px}.about-dialog a{color:var(--yellow)}#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,14px);z-index:300;opacity:0;pointer-events:none;background:#f3d22c;color:#121313;padding:13px 20px;border:1px solid #ffe36f;font:700 11px var(--body);max-width:min(90vw,560px);text-align:center;transition:opacity .16s,transform .16s}#toast.visible{opacity:1;transform:translate(-50%,0)}
 @media(max-width:1220px){.app-shell{width:min(calc(100% - 50px),1400px)}.main-grid{grid-template-columns:325px minmax(0,1fr);gap:21px}.config-panel{padding-right:20px}.deployment-columns{gap:12px}.equipment-image,.equipment-card.wide .equipment-image{width:83px}.equipment-card.compact .equipment-image{width:74px}.equipment-card,.strat-card{gap:7px}.equipment-copy strong,.strat-copy strong{font-size:11px}.strat-art{width:57px;height:59px}.locked-tag{font-size:8px}}
 @media(max-width:960px){.top-pill{display:none}.main-nav{margin-left:auto;margin-right:0}.app-shell{width:min(calc(100% - 40px),780px)}.main-grid{grid-template-columns:1fr;gap:28px}.config-panel{border:0;padding:0;border-bottom:1px solid var(--edge);padding-bottom:21px}.result-panel{min-height:510px}.deployment-columns{gap:22px}.equipment-image,.equipment-card.wide .equipment-image{width:112px}.strat-art{width:70px;height:65px}.equipment-copy strong,.strat-copy strong{font-size:12px}.type-tab{min-height:48px}.ownership-button{margin-top:15px}.panel-heading{margin-bottom:17px}.hero{padding:26px 0}}
-@media(max-width:660px){.app-shell{width:calc(100% - 28px)}.topbar{height:66px;gap:10px}.brand{gap:8px}.brand-name{font-size:24px}.brand-mark{width:34px;height:34px}.brand-mark svg{width:22px;height:22px}.brand-name small{font-size:7px;margin-top:5px}.main-nav{gap:12px}.nav-link{font-size:10px}.nav-count{display:none}.main-nav .nav-link:last-child{display:none}.hero{padding:22px 0 21px}.hero h1{font-size:38px}.hero p{font-size:12px}.serial{display:none}.main-grid{padding:20px 0;gap:22px}.panel-heading h2{font-size:23px}.type-tabs{gap:6px}.type-tab{font-size:11px;gap:5px}.picked-item{min-height:79px}.deployment-columns{grid-template-columns:1fr;gap:10px}.equipment-card,.strat-card{min-height:73px}.equipment-image,.equipment-card.wide .equipment-image{width:100px}.equipment-card.compact .equipment-image{width:95px}.strat-art{width:65px;height:62px}.column-label{margin-top:15px}.result-panel{min-height:500px}.result-footer>span:first-child{display:none}.underbar{margin-bottom:18px}.underbar p{font-size:9px}.underbar-stamp{display:none}.site-footer{display:block;font-size:8px}.site-footer span{display:block;margin-bottom:7px}.site-footer span:last-child{text-align:left}.dialog-backdrop{padding:6px}.dialog-head{padding:18px 17px 15px}.dialog-head h2{font-size:27px}.dialog-head p{font-size:11px}.picker-search{margin:15px 17px 10px}.picker-filters{padding:0 17px 12px}.picker-list{padding:14px 17px;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.pick-card{min-height:133px;display:flex;flex-direction:column;align-items:stretch;padding:7px}.pick-art{width:100%;height:69px}.pick-info strong{font-size:11px}.dialog-foot{padding:12px 17px}.dialog-foot>span{display:none}.dialog-foot button{margin-left:auto}.ownership-tabs{padding:0 17px}.ownership-toolbar{padding:13px 17px 10px}.ownership-actions{padding:0 17px 13px;align-items:flex-start;flex-direction:column;gap:9px}.ownership-content{padding:0 17px 17px}.warbond-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.warbond-cover{height:89px}.warbond-body{padding:9px;min-height:100px}.warbond-body strong{font-size:12px}.warbond-body small{font-size:8px}.ownership-bottom{padding:11px 17px;flex-direction:column;align-items:stretch;gap:9px}.ownership-done{width:100%}.gear-ownership-grid{grid-template-columns:1fr}.about-dialog{padding:25px}.about-dialog h2{font-size:30px}}
+@media(max-width:660px){.app-shell{width:calc(100% - 28px)}.topbar{height:66px;gap:10px}.brand{gap:8px}.brand-name{font-size:24px}.brand-mark{width:33px;height:39px}.brand-mark svg{width:32px;height:38px}.brand-name small{font-size:7px;margin-top:5px}.main-nav{gap:12px}.nav-link{font-size:10px}.nav-count{display:none}.main-nav .nav-link:last-child{display:none}.hero{padding:22px 0 21px}.hero h1{font-size:38px}.hero p{font-size:12px}.serial{display:none}.main-grid{padding:20px 0;gap:22px}.panel-heading h2{font-size:23px}.type-tabs{gap:6px}.type-tab{font-size:11px;gap:5px}.picked-item{min-height:79px}.deployment-columns{grid-template-columns:1fr;gap:10px}.equipment-card,.strat-card{min-height:73px}.equipment-image,.equipment-card.wide .equipment-image{width:100px}.equipment-card.compact .equipment-image{width:95px}.strat-art{width:65px;height:62px}.column-label{margin-top:15px}.result-panel{min-height:500px}.result-footer>span:first-child{display:none}.underbar{margin-bottom:18px}.underbar p{font-size:9px}.underbar-stamp{display:none}.site-footer{display:block;font-size:8px}.site-footer span{display:block;margin-bottom:7px}.site-footer span:last-child{text-align:left}.dialog-backdrop{padding:6px}.dialog-head{padding:18px 17px 15px}.dialog-head h2{font-size:27px}.dialog-head p{font-size:11px}.picker-search{margin:15px 17px 10px}.picker-filters{padding:0 17px 12px}.picker-list{padding:14px 17px;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.pick-card{min-height:133px;display:flex;flex-direction:column;align-items:stretch;padding:7px}.pick-art{width:100%;height:69px}.pick-info strong{font-size:11px}.dialog-foot{padding:12px 17px}.dialog-foot>span{display:none}.dialog-foot button{margin-left:auto}.ownership-tabs{padding:0 17px}.ownership-toolbar{padding:13px 17px 10px}.ownership-actions{padding:0 17px 13px;align-items:flex-start;flex-direction:column;gap:9px}.ownership-content{padding:0 17px 17px}.warbond-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.warbond-cover{height:89px}.warbond-body{padding:9px;min-height:100px}.warbond-body strong{font-size:12px}.warbond-body small{font-size:8px}.ownership-bottom{padding:11px 17px;flex-direction:column;align-items:stretch;gap:9px}.ownership-done{width:100%}.gear-ownership-grid{grid-template-columns:1fr}.about-dialog{padding:25px}.about-dialog h2{font-size:30px}}
 @media(max-width:370px){.brand-name{font-size:20px}.nav-link{font-size:9px}.main-nav{gap:8px}.type-tab{font-size:10px}.picked-visual{width:70px}.equipment-image,.equipment-card.wide .equipment-image{width:82px}.strat-art{width:56px}.result-actions{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
@@ -34,18 +34,36 @@
 
 .gen-icon{width:23px;height:23px;display:flex;align-items:center;justify-content:center}.gen-icon svg{width:23px;height:23px}.tab-symbol{height:18px;width:21px;display:flex;align-items:center;justify-content:center}.tab-symbol svg{height:18px;width:21px;display:block}
 
+
+/* HELLDROP 1.5 | distinct Superstore ownership and disciplined insignia */
+.ownership-tabs{gap:25px}.ownership-tab{white-space:nowrap;font-size:10px;letter-spacing:.025em}
+.store-lede{display:flex;align-items:center;gap:13px;padding:13px 16px;margin-bottom:14px;border:1px solid #4b482b;background:#1c1d17}
+.store-lede-mark{flex:none;display:grid;place-items:center;width:36px;height:36px;background:#2d2714;color:var(--yellow);border:1px solid #61582c;font:700 16px var(--display)}
+.store-lede strong{display:block;font:700 13px var(--body);color:#f4eee0}
+.store-lede small{display:block;margin-top:4px;font:400 10px/1.5 var(--body);color:#abb4b4}
+.store-filter-count{font:500 9px var(--mono);color:#7d8c94;margin-left:auto}
+.superstore-card .gear-ownership-name{gap:5px}
+.superstore-card .gear-ownership-name small{font-size:9px;line-height:1.5}
+.superstore-card .gear-ownership-name .store-price{color:#d9c253;letter-spacing:.02em}
+@media(max-width:660px){.ownership-tabs{gap:13px;padding:0 17px}.ownership-tab{font-size:9px;padding:13px 0}.store-lede{padding:11px 12px;gap:9px}.store-lede small{font-size:9px}.store-filter-count{display:none}}
+@media(max-width:375px){.ownership-tabs{gap:9px}.ownership-tab{font-size:8px}}
 </style>
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <a class="brand" href="#top" aria-label="HELLDROP home">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8h16l10 16-5 28H19L14 24 24 8Z" stroke="#F1D034" stroke-width="3" stroke-linejoin="miter"/><path d="M24 8v14m16-14v14M22 33h20" stroke="#F1D034" stroke-width="3" stroke-linecap="square"/><path d="M32 21c3.866 0 7 2.91 7 6.5 0 2.295-1.36 4.05-3.104 5.198C34.26 33.77 33 35.02 33 37v1" stroke="#F1D034" stroke-width="3.5" stroke-linecap="square"/><circle cx="32" cy="45.5" r="2.6" fill="#F1D034"/></svg></span>
-        <span class="brand-name">HELL<span>DROP</span><small>HELLPOD LOADOUT RANDOMIZER</small></span>
+        <span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Hellpod with question mark">
+  <path d="M24 5H40L49 17V45L43 57H21L15 45V17Z" fill="#141a20" stroke="#e5e9e8" stroke-width="3.2" stroke-linejoin="miter"/>
+  <path d="M24 5L21 17H43L40 5M15 44H49M22 57L25 61H39L42 57" fill="none" stroke="#f1d034" stroke-width="3"/>
+  <path d="M26 29C26 24.8 28.6 22.5 32.5 22.5C36.7 22.5 39 24.8 39 28.1C39 31 36.6 32.6 34.3 34.3C32.3 35.6 32 37.1 32 39.1" fill="none" stroke="#f1d034" stroke-width="4.2" stroke-linecap="square"/>
+  <rect x="29.7" y="44.3" width="4.6" height="4.6" fill="#f1d034"/>
+</svg></span>
+        <span class="brand-name">HELL<span>DROP</span><small>RANDOM LOADOUT GENERATOR</small></span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
         <a class="nav-link active" href="#loadout" aria-current="page">Loadout</a>
-        <button class="nav-link warbond-nav" type="button" id="top-warbonds">Owned Warbonds <span class="nav-count" id="nav-warbond-count">01</span></button>
+        <button class="nav-link warbond-nav" type="button" id="top-warbonds">My arsenal <span class="nav-count" id="nav-warbond-count">01</span></button>
         <button class="nav-link" type="button" id="open-about">About</button>
       </nav>
       <span class="top-pill"><span class="online-led"></span><span id="data-status">Local armory</span></span>
@@ -81,9 +99,9 @@
             <span class="picked-arrow" aria-hidden="true">⌄</span>
           </button>
           <button class="browse-btn" id="browse-items" type="button"><span aria-hidden="true">⌕</span> Browse <span id="browse-type">PRIMARY</span> weapons <span aria-hidden="true">→</span></button>
-          <button class="ownership-button" id="open-warbonds" type="button" aria-label="Select your owned Warbonds and equipment">
+          <button class="ownership-button" id="open-warbonds" type="button" aria-label="Choose Warbonds, Superstore items and unlocked equipment">
             <span class="ownership-icon" aria-hidden="true">▤</span>
-            <span class="ownership-copy"><small>YOUR AVAILABLE EQUIPMENT</small><strong>Warbonds &amp; unlocks</strong><span id="ownership-summary">Free Warbond included · No premiums selected</span></span>
+            <span class="ownership-copy"><small>YOUR AVAILABLE EQUIPMENT</small><strong>Warbonds, Superstore &amp; unlocks</strong><span id="ownership-summary">Free Warbond included · No premiums selected</span></span>
             <span class="ownership-action">EDIT →</span>
           </button>
           <div class="panel-divider"></div>
@@ -121,19 +139,20 @@
 
   <div class="dialog-backdrop" id="ownership-backdrop" hidden>
     <section class="ownership-dialog" role="dialog" aria-modal="true" aria-labelledby="ownership-heading">
-      <div class="dialog-head ownership-head"><div><div class="section-kicker">ACQUISITION CENTER / PERSONAL ARSENAL</div><h2 id="ownership-heading">Owned Warbonds</h2><p>Only your selected Warbonds and unlocked rewards can be randomized.</p></div><button type="button" class="close-button" data-close-dialog aria-label="Close">×</button></div>
+      <div class="dialog-head ownership-head"><div><div class="section-kicker">ACQUISITION CENTER / PERSONAL ARSENAL</div><h2 id="ownership-heading">Your arsenal</h2><p>Choose the Warbonds, Superstore equipment, and individual unlocks you actually own.</p></div><button type="button" class="close-button" data-close-dialog aria-label="Close">×</button></div>
       <div class="ownership-tabs" role="tablist" aria-label="Ownership settings">
         <button class="ownership-tab active" type="button" data-ownership-tab="warbonds" role="tab" aria-selected="true">01 / WARBONDS</button>
-        <button class="ownership-tab" type="button" data-ownership-tab="items" role="tab" aria-selected="false">02 / INDIVIDUAL GEAR</button>
+        <button class="ownership-tab" type="button" data-ownership-tab="superstore" role="tab" aria-selected="false">02 / SUPERSTORE</button>
+        <button class="ownership-tab" type="button" data-ownership-tab="items" role="tab" aria-selected="false">03 / INDIVIDUAL GEAR</button>
       </div>
       <div class="ownership-toolbar"><label class="ownership-search"><span aria-hidden="true">⌕</span><input type="search" id="ownership-search" placeholder="Search Warbonds..." aria-label="Search owned equipment" autocomplete="off"></label><div class="ownership-tally" id="ownership-tally">0 OWNED</div></div>
       <div class="ownership-actions" id="ownership-actions"><span id="ownership-context">Starter gear and Helldivers Mobilize! are included by default.</span><div class="ownership-batch"><button type="button" id="ownership-select-all">SELECT ALL</button><button type="button" id="ownership-clear">CLEAR PREMIUMS</button></div></div>
       <div class="ownership-content" id="ownership-content" aria-live="polite"></div>
-      <div class="ownership-bottom"><span>Saved locally in this browser. Individual rewards still need to be unlocked with Medals.</span><button class="ownership-done" type="button" data-close-dialog>APPLY & CLOSE →</button></div>
+      <div class="ownership-bottom"><span>Selections are saved on this device. Mark only the gear you have unlocked or purchased.</span><button class="ownership-done" type="button" data-close-dialog>APPLY & CLOSE →</button></div>
     </section>
   </div>
 
-  <div class="dialog-backdrop" id="about-backdrop" hidden><div class="about-dialog" role="dialog" aria-modal="true" aria-labelledby="about-heading"><button type="button" class="close-button about-close" data-close-dialog aria-label="Close">×</button><div class="section-kicker">FIELD MANUAL / ABOUT</div><h2 id="about-heading">One pick. Four stratagems. No contradictions.</h2><p>HELLDROP is an unofficial Helldivers 2 fan utility. Pick a primary, secondary or stratagem to guarantee, then let the generator assemble your remaining gear from currently available equipment.</p><div class="about-rules"><strong>WHAT THE RULES MEAN</strong><p>• An Autocannon, Recoilless Rifle, Spear or any other backpack-fed support weapon uses both your support-weapon and backpack allowances.</p><p>• A Shield Generator Pack, Jump Pack or other backpack prevents a second backpack choice.</p><p>• Normal support weapons cannot be doubled up. Expendable support weapons can accompany another support weapon.</p><p>• Stratagems never repeat, and individual-slot rerolls recheck the entire deployment.</p><p>• Warbond ownership can be configured separately. Rewards from unselected Warbonds and unapproved special gear are excluded. If you have not purchased a reward with Medals, exclude it in Individual Gear.</p></div><p>Weapon renders and stratagem art are loaded from the community-supported <a href="https://helldivers-api.dionatha.com.br" target="_blank" rel="noreferrer">Helldivers API</a>, sourced from the <a href="https://helldivers.wiki.gg" target="_blank" rel="noreferrer">Helldivers Wiki</a>. A smaller built-in item pool works when the catalog is unavailable. All artwork belongs to its respective rights holders.</p><button class="generate-btn about-action" type="button" data-close-dialog>BACK TO DEPLOYMENT <span>→</span></button></div></div>
+  <div class="dialog-backdrop" id="about-backdrop" hidden><div class="about-dialog" role="dialog" aria-modal="true" aria-labelledby="about-heading"><button type="button" class="close-button about-close" data-close-dialog aria-label="Close">×</button><div class="section-kicker">FIELD MANUAL / ABOUT</div><h2 id="about-heading">One pick. Four stratagems. No contradictions.</h2><p>HELLDROP is an unofficial Helldivers 2 fan utility. Pick a primary, secondary or stratagem to guarantee, then let the generator assemble your remaining gear from currently available equipment.</p><div class="about-rules"><strong>WHAT THE RULES MEAN</strong><p>• An Autocannon, Recoilless Rifle, Spear or any other backpack-fed support weapon uses both your support-weapon and backpack allowances.</p><p>• A Shield Generator Pack, Jump Pack or other backpack prevents a second backpack choice.</p><p>• Normal support weapons cannot be doubled up. Expendable support weapons can accompany another support weapon.</p><p>• Stratagems never repeat, and individual-slot rerolls recheck the entire deployment.</p><p>• Warbond, Superstore and special-item ownership are configured separately. Rewards from unselected Warbonds and unowned Superstore gear are excluded. If you have not purchased a reward with Medals, exclude it in Individual Gear.</p></div><p>Weapon renders and stratagem art are loaded from the community-supported <a href="https://helldivers-api.dionatha.com.br" target="_blank" rel="noreferrer">Helldivers API</a>, sourced from the <a href="https://helldivers.wiki.gg" target="_blank" rel="noreferrer">Helldivers Wiki</a>. A smaller built-in item pool works when the catalog is unavailable. All artwork belongs to its respective rights holders.</p><button class="generate-btn about-action" type="button" data-close-dialog>BACK TO DEPLOYMENT <span>→</span></button></div></div>
   <div id="toast" role="status" aria-live="polite"></div>
   <script>
 /* HELLDROP | Compatibility-first randomized loadout engine.
@@ -408,6 +427,17 @@
     item.image = {url:`/images/v1/${type}/${upstream}.${hash}.webp`,wikiFile:knownOriginals[upstream] || null};
     item.imageUrl = '';
   }
+  // HELLDROP 1.5: independently purchasable Superstore loadout equipment.
+  // This indexed snapshot supplements the live community catalog when offline.
+  const storeSnapshot = [{"id":"cqc-30-stun-baton","name":"CQC-30 Stun Baton","category":"secondary","price":200,"section":"weapons","image":"/images/v1/weapons/cqc-30-stun-baton.7ca0ca25.webp","wikiFile":"CQC-30_Stun_Baton_Secondary_Render.png"},{"id":"cqc-42-machete","name":"CQC-42 Machete","category":"secondary","price":200,"section":"weapons","image":"/images/v1/weapons/cqc-42-machete.a18e0765.webp","wikiFile":"CQC-42_Machete_Secondary_Render.png"},{"id":"cqc-5-combat-hatchet","name":"CQC-5 Combat Hatchet","category":"secondary","price":200,"section":"weapons","image":"/images/v1/weapons/cqc-5-combat-hatchet.4a229d95.webp","wikiFile":"CQC-5_Combat_Hatchet_Secondary_Render.png"},{"id":"dbs-2-double-freedom","name":"DBS-2 Double Freedom","category":"primary","price":400,"section":"weapons","image":"/images/v1/weapons/dbs-2-double-freedom.99c52b04.webp","wikiFile":"DBS-2_Shotgun_Primary_Render.png"},{"id":"g-89-smokescreen","name":"G-89 Smokescreen","category":"throwable","price":300,"section":"weapons","image":"/images/v1/weapons/g-89-smokescreen.5c8fb1db.webp","wikiFile":"G-89_Smokescreen_Throwable_Render.png"},{"id":"las-12-sai","name":"LAS-12 Sai","category":"primary","price":400,"section":"weapons","image":"/images/v1/weapons/las-12-sai.c1182999.webp","wikiFile":"LAS-12_Sai_Primary_Render.png"},{"id":"p-92-warrant","name":"P-92 Warrant","category":"secondary","price":300,"section":"weapons","image":"/images/v1/weapons/p-92-warrant.c3f0bbec.webp","wikiFile":"P-92_Warrant_Secondary_Render.png"},{"id":"sg-97-sweeper","name":"SG-97 Sweeper","category":"primary","price":400,"section":"weapons","image":"/images/v1/weapons/sg-97-sweeper.b20c413c.webp","wikiFile":"SG-97_Shotgun_Primary_Render.png"},{"id":"ad-11-livewire","name":"AD-11 Livewire","category":null,"price":300,"section":"armors","image":"/images/v1/armors/ad-11-livewire.0f23e7de.webp","wikiFile":"AD-11_Livewire_Armor_Render.png"},{"id":"af-52-lockdown","name":"AF-52 Lockdown","category":null,"price":400,"section":"armors","image":"/images/v1/armors/af-52-lockdown.18e50f27.webp","wikiFile":"AF-52_Lockdown_Armor_Render.png"},{"id":"af-91-field-chemist","name":"AF-91 Field Chemist","category":null,"price":250,"section":"armors","image":"/images/v1/armors/af-91-field-chemist.2e69d26e.webp","wikiFile":"AF-91_Field_Chemist_Armor_Render.png"},{"id":"b-08-light-gunner","name":"B-08 Light Gunner","category":null,"price":150,"section":"armors","image":"/images/v1/armors/b-08-light-gunner.96f02321.webp","wikiFile":"B-08_Light_Gunner_Armor_Render.png"},{"id":"b-24-enforcer","name":"B-24 Enforcer","category":null,"price":150,"section":"armors","image":"/images/v1/armors/b-24-enforcer.b641d047.webp","wikiFile":"B-24_Enforcer_Body_Icon.png"},{"id":"b-27-fortified-commando","name":"B-27 Fortified Commando","category":null,"price":400,"section":"armors","image":"/images/v1/armors/b-27-fortified-commando.abc758be.webp","wikiFile":"B-27_Fortified_Commando_Armor_Render.png"},{"id":"bfm-77-reformer","name":"BFM-77 Reformer","category":null,"price":250,"section":"armors","image":"/images/v1/armors/bfm-77-reformer.034f3153.webp","wikiFile":"BFM-77_Reformer_Armor_Render.png"},{"id":"bp-77-grand-juror","name":"BP-77 Grand Juror","category":null,"price":250,"section":"armors","image":"/images/v1/armors/bp-77-grand-juror.debd8016.webp","wikiFile":"BP-77_Grand_Juror_Armor_Render.png"},{"id":"ce-101-guerilla-gorilla","name":"CE-101 Guerilla Gorilla","category":null,"price":250,"section":"armors","image":"/images/v1/armors/ce-101-guerilla-gorilla.91cbad05.webp","wikiFile":"CE-101_Guerilla_Gorilla_Armor_Render.png"},{"id":"ce-64-grenadier","name":"CE-64 Grenadier","category":null,"price":300,"section":"armors","image":"/images/v1/armors/ce-64-grenadier.ffe6da0e.webp","wikiFile":"CE-64_Grenadier_Armor_Render.png"},{"id":"ce-67-titan","name":"CE-67 Titan","category":null,"price":150,"section":"armors","image":"/images/v1/armors/ce-67-titan.53d15a26.webp","wikiFile":"CE-67_Titan_Armor_Render.png"},{"id":"ce-74-breaker","name":"CE-74 Breaker","category":null,"price":250,"section":"armors","image":"/images/v1/armors/ce-74-breaker.d951de4c.webp","wikiFile":"CE-74_Breaker_Armor_Render.png"},{"id":"ce-81-juggernaut","name":"CE-81 Juggernaut","category":null,"price":250,"section":"armors","image":"/images/v1/armors/ce-81-juggernaut.4860c575.webp","wikiFile":"CE-81_Juggernaut_Armor_Render.png"},{"id":"cm-10-clinician","name":"CM-10 Clinician","category":null,"price":250,"section":"armors","image":"/images/v1/armors/cm-10-clinician.936ffe55.webp","wikiFile":"CM-10_Clinician_Armor_Render.png"},{"id":"cm-17-butcher","name":"CM-17 Butcher","category":null,"price":250,"section":"armors","image":"/images/v1/armors/cm-17-butcher.5a85a46f.webp","wikiFile":"CM-17_Butcher_Body_Icon.png"},{"id":"cm-21-trench-paramedic","name":"CM-21 Trench Paramedic","category":null,"price":250,"section":"armors","image":"/images/v1/armors/cm-21-trench-paramedic.8eb91e2f.webp","wikiFile":"CM-21_Trench_Paramedic_Armor_Render.png"},{"id":"cpr-80-bulwark","name":"CPR-80 Bulwark","category":null,"price":250,"section":"armors","image":"/images/v1/armors/cpr-80-bulwark.c69dd6b0.webp","wikiFile":"CPR-80_Bulwark_Armor_Render.png"},{"id":"cw-9-white-wolf","name":"CW-9 White Wolf","category":null,"price":300,"section":"armors","image":"/images/v1/armors/cw-9-white-wolf.28e11dd2.webp","wikiFile":"CW-9_White_Wolf_Armor_Render.png"},{"id":"dp-8-mountain-scaled","name":"DP-8 Mountain-Scaled","category":null,"price":250,"section":"armors","image":"/images/v1/armors/dp-8-mountain-scaled.140a7f1d.webp","wikiFile":"DP-8_Mountain-Scaled_Armor_Render.png"},{"id":"ds-10-big-game-hunter","name":"DS-10 Big Game Hunter","category":null,"price":300,"section":"armors","image":"/images/v1/armors/ds-10-big-game-hunter.99655985.webp","wikiFile":"DS-10_Big_Game_Hunter_Armor_Render.png"},{"id":"fs-11-executioner","name":"FS-11 Executioner","category":null,"price":150,"section":"armors","image":"/images/v1/armors/fs-11-executioner.50970c78.webp","wikiFile":"FS-11_Executioner_Armor_Render.png"},{"id":"fs-34-exterminator","name":"FS-34 Exterminator","category":null,"price":400,"section":"armors","image":"/images/v1/armors/fs-34-exterminator.c90483a4.webp","wikiFile":"FS-34_Exterminator_Armor_Render.png"},{"id":"fs-37-ravager","name":"FS-37 Ravager","category":null,"price":250,"section":"armors","image":"/images/v1/armors/fs-37-ravager.7eaf5f4e.webp","wikiFile":"FS-37_Ravager_Armor_Render.png"},{"id":"fs-38-eradicator","name":"FS-38 Eradicator","category":null,"price":250,"section":"armors","image":"/images/v1/armors/fs-38-eradicator.3ee78b69.webp","wikiFile":"FS-38_Eradicator_Armor_Render.png"},{"id":"fs-61-dreadnought","name":"FS-61 Dreadnought","category":null,"price":250,"section":"armors","image":"/images/v1/armors/fs-61-dreadnought.f37ded3a.webp","wikiFile":"FS-61_Dreadnought_Armor_Render.png"},{"id":"gs-11-democracys-deputy","name":"GS-11 Democracy's Deputy","category":null,"price":300,"section":"armors","image":"/images/v1/armors/gs-11-democracys-deputy.e6ba1a50.webp","wikiFile":"GS-11_Democracy's_Deputy_Armor_Render.png"},{"id":"i-44-salamander","name":"I-44 Salamander","category":null,"price":250,"section":"armors","image":"/images/v1/armors/i-44-salamander.7b8982a1.webp","wikiFile":"I-44_Salamander_Armor_Render.png"},{"id":"i-92-fire-fighter","name":"I-92 Fire Fighter","category":null,"price":250,"section":"armors","image":"/images/v1/armors/i-92-fire-fighter.6d9315ca.webp","wikiFile":"I-92_Fire_Fighter_Armor_Render.png"},{"id":"ie-57-hell-bent","name":"IE-57 Hell-Bent","category":null,"price":250,"section":"armors","image":"/images/v1/armors/ie-57-hell-bent.517b1d2c.webp","wikiFile":"IE-57_Hell-Bent_Armor_Render.png"},{"id":"o-44-bonded-pilot","name":"O-44 Bonded Pilot","category":null,"price":250,"section":"armors","image":"/images/v1/armors/o-44-bonded-pilot.497cff16.webp","wikiFile":"O-44_Bonded_Pilot_Armor_Render.png"},{"id":"ph-56-jaguar","name":"PH-56 Jaguar","category":null,"price":150,"section":"armors","image":"/images/v1/armors/ph-56-jaguar.f4de5196.webp","wikiFile":"PH-56_Jaguar_Armor_Render.png"},{"id":"re-824-bearer-of-the-standard","name":"RE-824 Bearer of the Standard","category":null,"price":400,"section":"armors","image":"/images/v1/armors/re-824-bearer-of-the-standard.27a30ea9.webp","wikiFile":"RE-824_Bearer_of_the_Standard_Armor_Render.png"},{"id":"rs-100-sanctioner","name":"RS-100 Sanctioner","category":null,"price":250,"section":"armors","image":"/images/v1/armors/rs-100-sanctioner.bd66fd2d.webp","wikiFile":"RS-100_Sanctioner_Armor_Render.png"},{"id":"rs-6-fiend-destroyer","name":"RS-6 Fiend Destroyer","category":null,"price":300,"section":"armors","image":"/images/v1/armors/rs-6-fiend-destroyer.74e5ef85.webp","wikiFile":"RS-6_Fiend_Destroyer_Armor_Render.png"},{"id":"sc-15-drone-master","name":"SC-15 Drone Master","category":null,"price":250,"section":"armors","image":"/images/v1/armors/sc-15-drone-master.f6ae5a17.webp","wikiFile":"SC-15_Drone_Master_Armor_Render.png"},{"id":"sc-37-legionnaire","name":"SC-37 Legionnaire","category":null,"price":150,"section":"armors","image":"/images/v1/armors/sc-37-legionnaire.11a204e1.webp","wikiFile":"SC-37_Legionnaire_Armor_Render.png"},{"id":"sr-64-cinderblock","name":"SR-64 Cinderblock","category":null,"price":250,"section":"armors","image":"/images/v1/armors/sr-64-cinderblock.65bcfdae.webp","wikiFile":"SR-64_Cinderblock_Armor_Render.png"},{"id":"ss-500-pale-prosecutor","name":"SS-500 Pale Prosecutor","category":null,"price":250,"section":"armors","image":"/images/v1/armors/ss-500-pale-prosecutor.a1fb8b99.webp","wikiFile":"SS-500_Pale_Prosecutor_Armor_Render.png"},{"id":"uf-84-doubt-killer","name":"UF-84 Doubt Killer","category":null,"price":400,"section":"armors","image":"/images/v1/armors/uf-84-doubt-killer.8866968d.webp","wikiFile":"UF-84_Doubt_Killer_Armor_Render.png"}];
+  for(const m of storeSnapshot){
+    const target=root.FALLBACK_CATALOG[m.section];
+    const entry={id:m.id,name:m.name,category:m.category||undefined,
+      source:{type:'superstore',label:'Superstore',cost:{currency:'super_credits',amount:m.price}},
+      image:{url:m.image,wikiFile:m.wikiFile}};
+    const index=target.findIndex(item=>item.id===m.id);
+    if(index<0)target.push(entry); else Object.assign(target[index],entry);
+  }
   // Cached Warbond cover fingerprints from the community catalog. The live API
   // replaces these URLs whenever its manifest changes.
   const coverHash = {
@@ -457,7 +487,7 @@
   const human = value => String(value || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
   const groupName = item => human(item.category || item.group || item.kind || item.source?.label || 'Equipment');
   const optionKey = 'helldrop-options-v1';
-  const cacheKey = 'helldrop-catalog-v3';
+  const cacheKey = 'helldrop-catalog-v4';
   const ownershipKey = 'helldrop-ownership-v1';
   let catalog = window.FALLBACK_CATALOG;
   let category = 'primary';
@@ -470,6 +500,7 @@
   let ownershipTab = 'warbonds';
   let ownershipSearch = '';
   let gearFilter = 'all';
+  let superstoreFilter = 'all';
   const savedOwnership = (() => {try {return JSON.parse(localStorage.getItem(ownershipKey) || '{}');}catch{return {};}})();
   const ownership = {
     warbondIds: Array.isArray(savedOwnership.warbondIds) ? savedOwnership.warbondIds.filter(id=>typeof id==='string' && id!=='helldivers-mobilize') : [],
@@ -639,12 +670,13 @@
   }
   function updateOwnershipSummary() {
     const n = ownership.warbondIds.length;
-    const x = ownership.extraIds.length;
+    const store=allSuperstoreGear().filter(x=>ownership.extraIds.includes(x.key)).length;
+    const x = Math.max(0,ownership.extraIds.length-store);
     const excluded = ownership.excludedIds.length;
     $('#nav-warbond-count').textContent = String(n+1).padStart(2,'0');
-    $('#top-warbonds').setAttribute('aria-label', `Owned Warbonds: ${n+1} enabled. Configure ownership`);
+    $('#top-warbonds').setAttribute('aria-label', `Configure your arsenal: Warbonds, Superstore and individual equipment`);
     $('#ownership-summary').textContent = `Standard + ${n} premium/legendary selected` +
-      (x ? ` · ${x} special item${x===1?'':'s'}` : '') + (excluded ? ` · ${excluded} reward${excluded===1?'':'s'} excluded` : '');
+      (store ? ` · ${store} Superstore` : '') + (x ? ` · ${x} special` : '') + (excluded ? ` · ${excluded} reward${excluded===1?'':'s'} excluded` : '');
   }
   function allWarbonds() {
     return [...(catalog.warbonds || window.FALLBACK_WARBONDS || [])]
@@ -670,12 +702,33 @@
     else ownership.warbondIds.push(id);
     saveOwnership();
   }
+  function allSuperstoreGear() {
+    const out=[];
+    for(const section of ['weapons','armors','stratagems','boosters']){
+      for(const item of catalog[section]||[]){
+        if(item.source?.type!=='superstore')continue;
+        out.push({section,item,key:Core.equipmentKey(section,item)});
+      }
+    }
+    return out.sort((a,b) => a.section.localeCompare(b.section) || a.item.name.localeCompare(b.item.name));
+  }
+  function toggleSuperstoreGear(key) {
+    if(!allSuperstoreGear().some(x=>x.key===key))return;
+    if(ownership.extraIds.includes(key))ownership.extraIds=ownership.extraIds.filter(x=>x!==key);
+    else ownership.extraIds.push(key);
+    saveOwnership();
+  }
+  function setAllSuperstoreGear(value) {
+    const keys=allSuperstoreGear().map(x=>x.key);
+    ownership.extraIds=value ? [...new Set([...ownership.extraIds,...keys])] : ownership.extraIds.filter(k=>!keys.includes(k));
+    saveOwnership();
+  }
   function allGearCandidates() {
     const out=[];
     for(const section of ['weapons','stratagems','boosters','armors']){
       for(const item of catalog[section]||[]) {
         const src=item.source?.type;
-        if(src==='default')continue;
+        if(src==='default' || src==='superstore')continue;
         if(src==='warbond' && item.source?.warbondId!=='helldivers-mobilize' &&
           !ownership.warbondIds.includes(item.source?.warbondId))continue;
         out.push({section,item,key:Core.equipmentKey(section,item),isWarbond:src==='warbond',isRequisition:src==='requisition',includedByDefault:src==='warbond'||src==='requisition'});
@@ -700,6 +753,8 @@
     $('#ownership-context').textContent='Standard Warbond included automatically. Select any Premium or Legendary Warbonds you own.';
     $('#ownership-select-all').hidden=false;
     $('#ownership-clear').hidden=false;
+    $('#ownership-select-all').textContent='SELECT ALL';
+    $('#ownership-clear').textContent='CLEAR PREMIUMS';
     $('#ownership-content').innerHTML=all.length ? `<div class="warbond-grid">${all.map(w=>{
       const standard=w.type==='standard';
       const checked=standard || ownership.warbondIds.includes(w.id);
@@ -712,6 +767,34 @@
       </button>`;
     }).join('')}</div>` : '<div class="no-results">NO MATCHING WARBONDS FOUND.</div>';
   }
+  function renderSuperstore() {
+    const all=allSuperstoreGear();
+    const owned=all.filter(x=>ownership.extraIds.includes(x.key)).length;
+    const term=ownershipSearch.toLowerCase();
+    const filtered=all.filter(({section,item})=>{
+      if(superstoreFilter==='armors' && section!=='armors')return false;
+      if(['primary','secondary','throwable'].includes(superstoreFilter) && item.category!==superstoreFilter)return false;
+      return !term || [item.name,section,item.category,'superstore'].filter(Boolean).some(x=>x.toLowerCase().includes(term));
+    });
+    $('#ownership-tally').textContent=`${owned} / ${all.length} OWNED`;
+    $('#ownership-context').textContent='Superstore equipment is sold separately from Warbonds. Select only items you own.';
+    $('#ownership-select-all').hidden=false;
+    $('#ownership-clear').hidden=false;
+    $('#ownership-select-all').textContent='MARK ALL OWNED';
+    $('#ownership-clear').textContent='CLEAR SUPERSTORE';
+    const filters=[['all','ALL'],['armors','ARMOR'],['primary','PRIMARY'],['secondary','SECONDARY'],['throwable','THROWABLE']];
+    const chips=`<div class="gear-filters">${filters.map(([key,label])=>`<button type="button" class="gear-filter ${superstoreFilter===key?'active':''}" data-superstore-filter="${key}">${label}</button>`).join('')}<span class="store-filter-count">${filtered.length} ITEMS</span></div>`;
+    const cards=filtered.length?`<div class="gear-ownership-grid">${filtered.map(({section,item,key})=>{
+      const checked=ownership.extraIds.includes(key);
+      const cost=item.source?.cost?.amount;
+      return `<button type="button" class="gear-ownership-card superstore-card ${checked?'gear-owned':''}" data-superstore-key="${esc(key)}" role="checkbox" aria-checked="${checked}">
+        <span class="gear-ownership-art">${art(item,section==='weapons'?item.category:'armor')}</span>
+        <span class="gear-ownership-name"><strong>${esc(item.name)}</strong><small>${esc(section==='armors'?'ARMOR':human(item.category || section))}${cost?' · <span class="store-price">'+cost+' SC</span>':''}</small></span>
+        <span class="gear-ownership-toggle">${checked?'✓':'+'}</span>
+      </button>`;
+    }).join('')}</div>`:'<div class="no-results">NO SUPERSTORE ITEMS MATCH THESE FILTERS.</div>';
+    $('#ownership-content').innerHTML=`<div class="store-lede"><span class="store-lede-mark">SC</span><span><strong>Superstore purchases</strong><small>Check only gear you have purchased. The list is not an indicator of the current store rotation.</small></span></div>`+chips+cards;
+  }
   function renderIndividualGear() {
     const term=ownershipSearch.toLowerCase();
     const items=allGearCandidates().filter(x=> {
@@ -723,10 +806,10 @@
     const totalExtras=ownership.extraIds.length;
     const totalExcluded=ownership.excludedIds.length;
     $('#ownership-tally').textContent=`${totalExtras} EXTRA OWNED · ${totalExcluded} EXCLUDED`;
-    $('#ownership-context').textContent='Uncheck unclaimed Warbond rewards and requisition stratagems. Add Superstore or special gear individually.';
+    $('#ownership-context').textContent='Uncheck unclaimed Warbond rewards and requisition stratagems. Add other event or edition gear individually.';
     $('#ownership-select-all').hidden=true;
     $('#ownership-clear').hidden=true;
-    const filters=[['all','ALL'],['warbond','WARBOND REWARDS'],['requisition','REQUISITION'],['special','SUPERSTORE + SPECIAL']];
+    const filters=[['all','ALL'],['warbond','WARBOND REWARDS'],['requisition','REQUISITION'],['special','EVENTS + EDITIONS']];
     const tabs=`<div class="gear-filters">${filters.map(([key,label])=>`<button type="button" class="gear-filter ${key===gearFilter?'active':''}" data-gear-filter="${key}">${label}</button>`).join('')}</div>`;
     const content=items.length ? `<div class="gear-ownership-grid">${items.map(({section,item,key,includedByDefault})=>{
       const checked=includedByDefault ? !ownership.excludedIds.includes(key) : ownership.extraIds.includes(key);
@@ -741,11 +824,11 @@
       tab.classList.toggle('active',selected);
       tab.setAttribute('aria-selected',String(selected));
     });
-    $('#ownership-search').placeholder=ownershipTab==='warbonds'?'Search Warbonds...':'Search individual equipment...';
-    if(ownershipTab==='warbonds')renderWarbonds();else renderIndividualGear();
+    $('#ownership-search').placeholder=ownershipTab==='warbonds'?'Search Warbonds...':ownershipTab==='superstore'?'Search Superstore equipment...':'Search individual equipment...';
+    if(ownershipTab==='warbonds')renderWarbonds();else if(ownershipTab==='superstore')renderSuperstore();else renderIndividualGear();
   }
   function openWarbonds() {
-    ownershipTab='warbonds'; ownershipSearch='';gearFilter='all';
+    ownershipTab='warbonds'; ownershipSearch='';gearFilter='all';superstoreFilter='all';
     $('#ownership-search').value='';
     $('#ownership-backdrop').hidden=false;
     document.body.style.overflow='hidden';
@@ -827,7 +910,7 @@
       .map(item => ({
         id:item.id, name:item.name, category:item.category, subcategory:item.subcategory,
         kind:item.kind, permitType:item.permitType, traitIds:item.traitIds || [],
-        source:item.source?{type:item.source.type,label:item.source.label,warbondId:item.source.warbondId || null}:null,
+        source:item.source?{type:item.source.type,label:item.source.label,warbondId:item.source.warbondId || null,cost:item.source.cost || null}:null,
         image:item.image?{url:item.image.url,wikiFile:item.image.wikiFile || null}:null,
         wikiUrl:item.wiki?.url || ''
       }));
@@ -842,6 +925,10 @@
     const responses=await Promise.all(types.map(type => fetchJSON(origin+'/'+type+'.json')));
     const out={};
     types.forEach((type,i)=>out[type]=normalize(responses[i].data,type));
+    // Keep separately sold equipment visible even if a temporary API snapshot misses it.
+    for(const section of ['weapons','armors'])for(const item of window.FALLBACK_CATALOG[section].filter(x=>x.source?.type==='superstore')){
+      if(!out[section].some(x=>x.id===item.id))out[section].push(item);
+    }
     try {const wb=await fetchJSON(origin+'/warbonds.json');out.warbonds=wb.data.filter(w=>w.id&&w.name&&!w.upcoming).map(w=>({id:w.id,name:w.name,type:w.type,releaseDate:w.releaseDate,image:w.image?{url:w.image.url,wikiFile:w.image.wikiFile || null}:null}));}
     catch {out.warbonds=window.FALLBACK_WARBONDS;}
     if(out.weapons.length<30 || out.stratagems.length<35)throw new Error('Catalog is incomplete');
@@ -858,7 +945,7 @@
         const res=await catalogFrom(s.url);
         catalog=res.catalog;
         try{localStorage.setItem(cacheKey,JSON.stringify({catalog,storedAt:Date.now()}));}catch{}
-        ensureSelected();updateSelectionUI(); if(result){result=null;renderResult();}
+        ensureSelected();updateSelectionUI(); if(result){result=null;renderResult();} if(!$('#ownership-backdrop').hidden)renderOwnership();
         const count=catalog.weapons.length+catalog.stratagems.length+catalog.boosters.length+catalog.armors.length;
         setDataStatus(count+' ITEMS SYNCED',true);
         return;
@@ -866,7 +953,7 @@
     }
     try{
       const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
-      if(cached?.catalog?.stratagems?.length){catalog=cached.catalog;ensureSelected();updateSelectionUI();setDataStatus('CACHED ARMORY',true);return;}
+      if(cached?.catalog?.stratagems?.length){catalog=cached.catalog;ensureSelected();updateSelectionUI();if(!$('#ownership-backdrop').hidden)renderOwnership();setDataStatus('CACHED ARMORY',true);return;}
     }catch{}
     setDataStatus('OFFLINE ARMORY',false);
     updateSelectionUI();
@@ -878,11 +965,11 @@
     $('#open-about').addEventListener('click',openAbout);
     $('#open-warbonds').addEventListener('click',openWarbonds);
     $('#top-warbonds').addEventListener('click',openWarbonds);
-    $$('.ownership-tab').forEach(tab=>tab.addEventListener('click',()=>{ownershipTab=tab.dataset.ownershipTab;ownershipSearch='';gearFilter='all';$('#ownership-search').value='';renderOwnership();}));
+    $$('.ownership-tab').forEach(tab=>tab.addEventListener('click',()=>{ownershipTab=tab.dataset.ownershipTab;ownershipSearch='';gearFilter='all';superstoreFilter='all';$('#ownership-search').value='';renderOwnership();}));
     $('#ownership-search').addEventListener('input',event=>{ownershipSearch=event.target.value.trim();renderOwnership();});
-    $('#ownership-content').addEventListener('click',event=>{const wb=event.target.closest('[data-warbond]');if(wb){chooseWarbond(wb.dataset.warbond);return;}const gear=event.target.closest('[data-gear-key]');if(gear){toggleGear(gear.dataset.gearKey);return;}const filter=event.target.closest('[data-gear-filter]');if(filter){gearFilter=filter.dataset.gearFilter;renderOwnership();}});
-    $('#ownership-select-all').addEventListener('click',()=>{ownership.warbondIds=allWarbonds().filter(w=>w.type!=='standard').map(w=>w.id);saveOwnership();});
-    $('#ownership-clear').addEventListener('click',()=>{ownership.warbondIds=[];saveOwnership();});
+    $('#ownership-content').addEventListener('click',event=>{const wb=event.target.closest('[data-warbond]');if(wb){chooseWarbond(wb.dataset.warbond);return;}const store=event.target.closest('[data-superstore-key]');if(store){toggleSuperstoreGear(store.dataset.superstoreKey);return;}const storeFilter=event.target.closest('[data-superstore-filter]');if(storeFilter){superstoreFilter=storeFilter.dataset.superstoreFilter;renderOwnership();return;}const gear=event.target.closest('[data-gear-key]');if(gear){toggleGear(gear.dataset.gearKey);return;}const filter=event.target.closest('[data-gear-filter]');if(filter){gearFilter=filter.dataset.gearFilter;renderOwnership();}});
+    $('#ownership-select-all').addEventListener('click',()=>{if(ownershipTab==='superstore'){setAllSuperstoreGear(true);return;}ownership.warbondIds=allWarbonds().filter(w=>w.type!=='standard').map(w=>w.id);saveOwnership();});
+    $('#ownership-clear').addEventListener('click',()=>{if(ownershipTab==='superstore'){setAllSuperstoreGear(false);return;}ownership.warbondIds=[];saveOwnership();});
     $('#generate').addEventListener('click',generate);
     $('#reroll-all').addEventListener('click',generate);
     $('#copy-loadout').addEventListener('click',copyResult);
