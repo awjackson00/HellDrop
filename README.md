@@ -11,6 +11,20 @@ An unofficial **Helldivers 2 loadout randomizer**. Lock one primary weapon, seco
 - Weapon, armor, booster and stratagem art provided by community catalog sources, with offline fallback visuals
 - Mobile-friendly dark military-inspired interface with a custom hellpod/question-mark emblem
 
+## Ownership filters
+
+Open **My Arsenal** in the top navigation and select the items you actually own.
+
+- **Warbonds:** Enable premium or legendary Warbonds you have purchased. The free standard Warbond is included automatically. Rewards can be disabled individually until unlocked.
+- **Superstore:** Independently select Superstore armor, weapons and throwables bought with Super Credits. The included static catalog currently indexes 47 Superstore loadout items (39 armor sets and 8 weapons or throwables), with category filters and per-item prices. Listings are not live store rotations.
+- **Individual Gear:** Manage unclaimed Warbond rewards, requisition stratagems and special/event gear.
+
+Ownership is saved locally in the browser. Existing saved Superstore selections from earlier versions are retained automatically. Unowned Superstore equipment stays out of randomized loadouts. The lock and reroll controls respect these filters.
+
+## Logo
+
+The HELLDROP mark is a compact original vector hellpod silhouette with an inset question mark. The logo has no ChatGPT branding, watermark or signature, and matches the site favicon.
+
 ## GitHub Pages
 
 This is a static website. It has no build dependencies.
