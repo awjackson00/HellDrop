@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0a0d11" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <meta name="description" content="Pick one Helldivers 2 item, then randomize a complete compatible loadout with official-style gear art, Warbond filtering, and no conflicting stratagems." />
+  <title>HELLDROP | Hellpod Loadout Randomizer</title>
+  <link rel="preconnect" href="https://helldivers-api.dionatha.com.br" crossorigin />
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{--bg:#0a0d11;--surface:#10151b;--surface-2:#131a22;--surface-3:#19212a;--edge:#25303a;--edge-strong:#48586a;--ink:#edf0ec;--muted:#a3adb5;--dim:#73808b;--yellow:#f1d034;--yellow-wash:#2a2410;--green:#a4c6b0;--body:'Inter',Arial,sans-serif;--display:'Barlow Condensed',Arial Narrow,sans-serif;--mono:'IBM Plex Mono',Consolas,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(circle at top,#152334 0,#0d1116 28%,#090c10 68%,#07090c 100%);font-family:var(--body);-webkit-font-smoothing:antialiased}body:before{content:'';position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 18%),repeating-linear-gradient(90deg,transparent 0 95px,rgba(255,255,255,.018) 95px 96px);opacity:.22}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}a{color:inherit}a:hover{color:var(--yellow)}::selection{background:var(--yellow);color:#141515}[hidden]{display:none!important}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+.app-shell{width:min(calc(100% - 72px),1380px);margin:0 auto;padding-bottom:24px}
+.topbar{height:84px;display:flex;align-items:center;gap:34px;border-bottom:1px solid var(--edge);position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(9,12,16,.96),rgba(9,12,16,.9));backdrop-filter:blur(10px)}.brand{display:flex;align-items:center;gap:14px;text-decoration:none;flex:none}.brand-mark{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid #5e5220;background:linear-gradient(180deg,#171d24,#11161c);box-shadow:inset 0 0 0 1px rgba(255,255,255,.03)}.brand-mark svg{width:31px;height:31px;display:block}.brand-name{display:block;font:800 31px/.82 var(--display);letter-spacing:.01em;color:#fff}.brand-name>span{color:#fff}.brand-name small{display:block;font:500 8px/1.45 var(--mono);color:#9facb5;letter-spacing:.05em;margin-top:8px}.main-nav{display:flex;align-items:stretch;gap:28px;height:100%;margin:0 auto 0 clamp(10px,4vw,58px)}.nav-link{padding:6px 0 0;position:relative;background:transparent;border:0;display:flex;align-items:center;justify-content:center;gap:9px;color:#aeb8bf;text-decoration:none;font:700 11px var(--body);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}.nav-link:after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:transparent}.nav-link.active{color:var(--yellow)}.nav-link.active:after{background:var(--yellow)}.nav-link:hover{color:#fff}.nav-count{font:600 10px var(--mono);color:#e0ca62;border:1px solid #73692f;padding:3px 5px;background:#1f1a0d}.top-pill{display:flex;align-items:center;gap:9px;flex:none;color:#91a0a8;font:500 9px var(--mono);text-transform:uppercase;white-space:nowrap}.online-led,.state-led{width:6px;height:6px;border-radius:50%;background:#788184;display:inline-block;flex:none}.top-pill.connected .online-led{background:var(--green)}
+.hero{display:flex;justify-content:space-between;align-items:end;gap:30px;padding:30px 0 26px;border-bottom:1px solid var(--edge)}.hero-copy{max-width:900px}.eyebrow,.section-kicker,.field-label,.tiny-note{font:500 10px/1.5 var(--mono);letter-spacing:.045em;color:#95a2a9}.eyebrow{display:flex;gap:9px;align-items:center;color:#d8c45f}.eyebrow-line{width:18px;height:2px;background:var(--yellow)}.serial{color:#71808a;font-size:9px}.hero h1{margin:10px 0 7px;font:800 clamp(34px,3.4vw,48px)/.98 var(--display);text-transform:uppercase;letter-spacing:.015em}.hero h1 span{color:var(--yellow)}.hero h1 em{font-style:normal}.hero p{margin:0;color:#afbac1;font-size:13px;line-height:1.7;max-width:690px}.hero-aside{display:none}
+.main-grid{display:grid;grid-template-columns:minmax(320px,380px) minmax(0,1fr);gap:24px;padding:28px 0 24px;align-items:stretch}.panel{min-width:0;background:linear-gradient(180deg,rgba(20,27,34,.94),rgba(13,18,24,.94));border:1px solid var(--edge);box-shadow:0 14px 38px rgba(0,0,0,.25),inset 0 0 0 1px rgba(255,255,255,.015)}.config-panel{padding:24px}.result-panel{min-height:600px;display:flex;flex-direction:column;padding:24px}.panel-heading{display:flex;justify-content:space-between;align-items:start;gap:14px;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid var(--edge)}.panel-heading h2{font:800 25px/1 var(--display);letter-spacing:.015em;text-transform:uppercase;margin:5px 0 5px}.panel-heading p{margin:0;font-size:11px;line-height:1.5;color:#8f9ba2}.section-kicker{font-size:9px;color:#c7b45b}.heading-index{display:none}.field-label{font-weight:600;color:#bdc7cd;font-size:10px;margin:18px 0 10px}.type-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.type-tab{display:flex;align-items:center;justify-content:center;gap:7px;background:#10161c;color:#b7c0c6;border:1px solid #34414c;min-height:46px;padding:8px 6px;font:700 12px var(--body);border-radius:2px;transition:border-color .15s,color .15s,background .15s}.type-tab:hover{border-color:#7f8b93;color:#fff}.type-tab.active{border-color:var(--yellow);color:var(--yellow);background:linear-gradient(180deg,#1a1b16,#14181d)}.tab-number{display:none}.tab-symbol{font-size:17px;line-height:1}.picked-item{width:100%;min-height:84px;display:flex;align-items:center;gap:12px;text-align:left;padding:8px 10px 8px 8px;background:#0f151b;border:1px solid #35424e;border-radius:2px;color:var(--ink)}.picked-item:hover{border-color:var(--yellow)}.picked-visual{width:92px;height:66px;flex:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#131c24,#0d1218);overflow:hidden;border:1px solid #24303a}.picked-copy{display:flex;flex-direction:column;align-items:start;min-width:0;flex:1;gap:4px}.picked-copy small{color:var(--yellow);font:600 9px var(--mono);letter-spacing:.045em}.picked-copy b{font:700 15px/1.2 var(--body);overflow-wrap:anywhere}.picked-copy>span{font:400 10px/1.3 var(--body);color:#9dabb2;overflow-wrap:anywhere}.picked-arrow{color:var(--yellow);font-size:23px;line-height:1}.browse-btn{display:none}.ownership-button{width:100%;display:flex;align-items:center;gap:12px;margin-top:18px;padding:14px 0;border:0;border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);background:transparent;text-align:left;color:var(--ink)}.ownership-button:hover .ownership-copy strong{color:var(--yellow)}.ownership-icon{flex:none;width:34px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid #6f6328;background:#1b1b14;color:var(--yellow);font-size:17px}.ownership-copy{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}.ownership-copy small{font:500 8px var(--mono);color:#97a3aa;letter-spacing:.04em}.ownership-copy strong{font-size:12px;font-weight:700}.ownership-copy>span{font-size:10px;line-height:1.25;color:#8f9ba1}.ownership-action{font:600 10px var(--mono);color:var(--yellow);white-space:nowrap}.panel-divider{display:none}.options-heading{display:flex;justify-content:space-between;align-items:end}.options-heading .field-label{margin:22px 0 9px}.tiny-note{font-size:8px;color:#6e7a82}.switch-row{display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;padding:10px 0;cursor:pointer}.switch-row>span{display:flex;flex-direction:column;gap:4px}.switch-row strong{font-size:12px;font-weight:600}.switch-row small{font-size:10px;color:#85939b}.switch-row input{position:absolute;opacity:0;right:0;width:37px;height:24px}.switch{display:block;width:36px;height:20px;border:1px solid #56636c;border-radius:12px;background:#323b43;position:relative;flex:none;transition:background .15s}.switch:before{content:'';width:12px;height:12px;background:#d6dbd7;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .15s}.switch-row input:checked+.switch{background:var(--yellow);border-color:var(--yellow)}.switch-row input:checked+.switch:before{background:#101214;transform:translateX(16px)}.switch-row input:focus-visible+.switch{outline:2px solid var(--yellow);outline-offset:3px}.rules-box{display:flex;gap:9px;align-items:start;padding:12px 0;margin:10px 0 13px;border-top:1px solid var(--edge);color:#95a2a8}.rules-led{width:5px;height:5px;border-radius:50%;background:#95c6a4;margin-top:4px;flex:none}.rules-box p{margin:0;font:400 10px/1.6 var(--body)}.generate-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:54px;border:1px solid #ecd75d;border-radius:2px;color:#111417;background:linear-gradient(180deg,#f1d034,#e0b922);font:800 13px var(--body);letter-spacing:.04em;transition:filter .15s,transform .05s}.generate-btn:hover{filter:brightness(1.04)}.generate-btn:active{transform:translateY(1px)}.gen-icon{font-size:22px;font-weight:400}.gen-arrow{margin-left:auto;margin-right:7px;font-size:19px;font-weight:400}.keyboard-hint{text-align:center;font:400 8px/1.5 var(--mono);color:#73808a;margin:12px 0 0}.keyboard-hint kbd{border:1px solid #495660;padding:1px 3px;font:inherit;color:#c6cdd0}
+.result-heading{margin-bottom:0}.deployment-state{display:flex;align-items:center;gap:7px;border:1px solid #42505c;padding:6px 9px;font:600 10px var(--mono);color:#aeb9bf;background:#11171d}.deployment-state.ready{border-color:#84752b;color:var(--yellow);background:#1f1d12}.deployment-state.ready .state-led{background:var(--yellow)}#result-area{flex:1;min-width:0}.loadout-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--edge);padding:12px 0 11px;color:#8e9ba2;font:500 9px var(--mono);letter-spacing:.03em}.loadout-id{color:#697783}.deployment-columns{display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);gap:24px;min-width:0}.kit-col,.strat-col{min-width:0}.column-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:18px 0 7px;font:700 11px var(--body);color:#ecf0ee;text-transform:uppercase;letter-spacing:.04em}.column-label>span{font:500 9px var(--mono);color:#7d8a93}.kit-list,.strat-list{display:grid;gap:8px}.equipment-card,.strat-card{display:flex;align-items:center;min-width:0;min-height:82px;padding:8px 10px;background:linear-gradient(180deg,#10161d,#0e141a);border:1px solid #25313b;gap:12px;position:relative}.equipment-card.locked,.strat-card.locked{border-color:#7a6f30;background:linear-gradient(180deg,#171913,#11161c)}.equipment-image{width:110px;height:68px;display:flex;align-items:center;justify-content:center;flex:none;background:linear-gradient(180deg,#131c24,#0d1218);overflow:hidden;border:1px solid #24303a}.equipment-image img{width:100%;height:100%;object-fit:contain;display:block}.equipment-card.wide .equipment-image{width:118px}.equipment-card.compact .equipment-image{width:92px;height:62px}.equipment-copy{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:5px;flex:1;padding:2px 0}.equipment-copy small,.snum{color:#9eadb5;font:600 9px/1.2 var(--mono);letter-spacing:.035em;text-transform:uppercase}.equipment-copy strong,.strat-copy strong{font:700 12px/1.3 var(--body);overflow-wrap:anywhere}.equipment-card.wide .equipment-copy strong{font-size:13px}.source-line{color:#71808a;font-size:10px;line-height:1.25}.slot-end{flex:none;align-self:center;min-width:21px;display:flex;align-items:center;justify-content:flex-end;margin-right:1px}.card-reroll{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid #44515d;color:#b5bfc2;background:transparent;border-radius:2px;font-size:21px;line-height:1}.card-reroll:hover{border-color:var(--yellow);color:var(--yellow)}.locked-tag{font:700 9px var(--mono);color:var(--yellow);letter-spacing:.03em;text-transform:uppercase}.strat-card{min-height:82px}.strat-art{width:68px;height:68px;display:flex;align-items:center;justify-content:center;flex:none;background:#121a21;overflow:hidden;border:1px solid #30404d}.strat-art img{width:100%;height:100%;object-fit:contain}.strat-card.kind-orbital .strat-art,.strat-card.kind-eagle .strat-art{background:#24181b;border-color:#4b3337}.strat-card.kind-backpack .strat-art,.strat-card.kind-support .strat-art{background:#11202b;border-color:#2f4a5b}.strat-copy{display:flex;flex-direction:column;justify-content:center;min-width:0;gap:6px;flex:1}.strat-copy strong{font-size:12px}.strat-badges{display:flex;flex-wrap:wrap;gap:4px}.tag{display:inline-block;color:#90a1aa;border:1px solid #344450;font:500 8px var(--mono);padding:2px 4px;background:#11161c}.strat-card.locked{box-shadow:inset 0 0 0 1px rgba(241,208,52,.18)}.result-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 16px}.secondary-btn{background:#10161c;border:1px solid #44505b;min-height:42px;color:#e1e5e5;font:700 11px var(--body);border-radius:2px;text-transform:uppercase;letter-spacing:.04em}.secondary-btn:hover{border-color:var(--yellow);color:var(--yellow)}.result-footer{display:flex;justify-content:space-between;gap:10px;padding:14px 0 0;border-top:1px solid var(--edge);color:#71808a;font:500 8px/1.5 var(--mono);text-transform:uppercase}.result-footer #equipment-counter{color:#a8bbac}.empty-result{min-height:405px;display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column;gap:13px;color:#73818a}.target-reticle{color:#c2ae45;font-size:58px;line-height:1;font-family:var(--display)}.empty-result h3{color:#d7dddc;font:800 27px/1.15 var(--display);text-transform:uppercase;margin:0}.empty-result p{max-width:330px;margin:0;font-size:12px;line-height:1.7}.underbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 26px;padding:14px 18px;border:1px solid var(--edge);background:linear-gradient(180deg,rgba(16,22,28,.85),rgba(13,18,24,.85))}.underbar-index{flex:none;color:var(--yellow);font:600 9px var(--mono)}.underbar p{color:#98a3a3;margin:0;font-size:10px;line-height:1.5;flex:1}.underbar-stamp{color:#a5c5a5;font:700 12px var(--mono)}.site-footer{display:flex;justify-content:space-between;gap:24px;padding:0 0 12px;color:#6c7983;font:400 9px/1.5 var(--mono)}.site-footer span:last-child{text-align:right;max-width:750px}
+/* Image treatments preserve the aspect ratio of the game renders. */
+.picked-visual img,.pick-art img,.gear-ownership-art img{width:100%;height:100%;object-fit:contain;display:block}.art-placeholder{display:flex;align-items:center;justify-content:center;color:#8b985d;width:100%;height:100%;opacity:.8}.art-placeholder svg{width:46px;height:46px;max-width:65%;max-height:65%}.strat-art .art-placeholder{color:#8497a2}.warbond-cover .art-placeholder svg{width:65px;height:65px}.picked-visual .art-placeholder svg{width:55px;height:55px}.equipment-image .art-placeholder svg{width:62px;height:56px}.kind-orbital .art-placeholder,.kind-eagle .art-placeholder{color:#cb6865}
+/* Flat modal surfaces: fewer nested boxes, consistent typography and focus. */
+.dialog-backdrop{position:fixed;inset:0;background:#080b0de8;display:flex;align-items:center;justify-content:center;padding:24px;z-index:100}.picker-dialog,.ownership-dialog,.about-dialog{width:min(100%,1000px);max-height:min(92vh,930px);background:#151a1d;border:1px solid #687173;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 90px #0008}.dialog-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:23px 28px 20px;border-bottom:1px solid #354044}.dialog-head h2{font:700 31px/1 var(--display);text-transform:uppercase;margin:7px 0}.dialog-head p{font-size:12px;color:#a2adaf;margin:0;line-height:1.5}.close-button{width:32px;height:32px;border:1px solid #657072;color:#e0e6e5;background:#252e32;font-size:24px;display:flex;align-items:center;justify-content:center;flex:none}.close-button:hover{border-color:var(--yellow);color:var(--yellow)}.picker-search{display:flex;align-items:center;gap:11px;margin:20px 28px 12px;padding:0 12px;background:#20272a;border:1px solid #5c686c;min-height:47px;color:#adb8bb}.picker-search>span:first-child{font-size:21px}.picker-search input,.ownership-search input{background:transparent;border:0;outline:0;color:#f0f3f1;flex:1;min-width:0;font-size:12px}.picker-search input::placeholder,.ownership-search input::placeholder{color:#849092}.search-count{color:#acb7b9;font:500 9px var(--mono);white-space:nowrap}.picker-filters,.gear-filters{display:flex;gap:6px;flex-wrap:wrap}.picker-filters{padding:0 28px 14px;border-bottom:1px solid #354044}.filter-chip,.gear-filter{background:transparent;border:1px solid #505b5e;color:#bdc7c7;padding:8px 11px;font:600 10px var(--body);border-radius:2px}.filter-chip.active,.gear-filter.active{border-color:var(--yellow);color:var(--yellow);background:#2b281c}.filter-chip:hover,.gear-filter:hover{color:#fff;border-color:#99a0a1}.picker-list{padding:18px 28px;overflow:auto;flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-content:start;min-height:170px}.pick-card{min-width:0;display:flex;align-items:center;gap:10px;text-align:left;padding:8px;background:#1a2023;border:1px solid #3c484b;color:#e2e7e7;border-radius:2px;min-height:102px}.pick-card:hover{border-color:#a4acaa}.pick-card.selected{border-color:var(--yellow);background:#23241c}.pick-art{width:90px;height:75px;display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden}.pick-info{display:flex;flex-direction:column;min-width:0;gap:5px}.pick-info strong{font-size:12px;line-height:1.3;overflow-wrap:anywhere}.pick-info small{font-size:9px;line-height:1.3;color:#87969b}.pick-info .chosen-tag{font:600 8px var(--mono);color:var(--yellow)}.no-results{grid-column:1/-1;color:#b6bdc0;text-align:center;padding:55px 20px;font:500 11px var(--mono)}.dialog-foot{border-top:1px solid #354044;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#869397;font:500 9px var(--mono);background:#1a2125}.dialog-foot button{border:0;color:var(--yellow);background:transparent;font:600 10px var(--mono)}
+.ownership-dialog{width:min(100%,1070px)}.ownership-tabs{display:flex;gap:26px;border-bottom:1px solid #354044;padding:0 28px}.ownership-tab{border:0;border-bottom:2px solid transparent;background:transparent;color:#a3aeb0;font:700 11px var(--body);padding:15px 0}.ownership-tab.active{color:var(--yellow);border-bottom-color:var(--yellow)}.ownership-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px 10px}.ownership-search{display:flex;align-items:center;gap:8px;border:1px solid #586164;background:#21292c;max-width:520px;flex:1;padding:0 12px;height:38px}.ownership-search>span{color:#bcc5c6;font-size:20px}.ownership-tally{color:#d7c34c;font:600 10px var(--mono);white-space:nowrap}.ownership-actions{padding:0 28px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#9aa6a8;font-size:10px}.ownership-batch{display:flex;gap:6px}.ownership-batch button{border:1px solid #576164;background:transparent;color:#e6e9e8;font:500 9px var(--mono);padding:8px 9px;white-space:nowrap}.ownership-batch button:hover{color:var(--yellow);border-color:var(--yellow)}.ownership-content{padding:0 28px 23px;overflow:auto;flex:1;min-height:200px}.warbond-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.warbond-card{border:1px solid #3c484b;background:#1b2225;display:flex;flex-direction:column;min-width:0;padding:0;color:#e8eae7;text-align:left;border-radius:2px}.warbond-card:hover{border-color:#909d9c}.warbond-card.owned{border-color:#d6bd39;background:#22231b}.warbond-card:disabled{opacity:1;cursor:default}.warbond-cover{position:relative;height:115px;display:block;overflow:hidden;background:#22272a}.warbond-cover img{width:100%;height:100%;object-fit:cover;display:block}.warbond-cover:after{content:'';position:absolute;inset:50% 0 0;background:linear-gradient(transparent,#15191980);pointer-events:none}.cover-tier{position:absolute;z-index:1;bottom:7px;left:9px;font:600 9px var(--mono);background:#101518d9;padding:3px 5px;color:#d6dedf}.warbond-body{padding:12px;display:flex;flex-direction:column;gap:7px;min-height:107px}.warbond-body strong{font:700 14px/1.2 var(--body);overflow-wrap:anywhere}.warbond-body small{font:400 9px/1.35 var(--mono);color:#a0aaad;overflow-wrap:anywhere}.warbond-status{display:flex;align-items:center;gap:8px;margin-top:auto;color:#a5b2b4;font:600 9px var(--mono)}.warbond-card.owned .warbond-status{color:var(--yellow)}.wb-check,.gear-ownership-toggle{display:flex;align-items:center;justify-content:center;width:21px;height:21px;border:1px solid #6a7679;color:#c7d0d0;font:700 14px var(--mono);flex:none}.owned .wb-check,.gear-owned .gear-ownership-toggle{border-color:var(--yellow);background:var(--yellow);color:#141717}.ownership-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid #354044;padding:14px 28px;background:#1c2428}.ownership-bottom>span{font:400 9px/1.45 var(--mono);color:#a1acad}.ownership-done{background:var(--yellow);color:#121515;border:1px solid #ffe572;border-radius:2px;padding:12px 16px;font:800 11px var(--body);white-space:nowrap}.ownership-done:hover{background:#ffe46f}.gear-filters{padding:0 0 14px}.gear-ownership-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.gear-ownership-card{border:1px solid #3c4a4d;background:#1b2225;display:flex;align-items:center;gap:11px;min-width:0;padding:7px;color:#ecf0ec;text-align:left}.gear-ownership-card:hover{border-color:#8e999a}.gear-ownership-card.gear-owned{border-color:#827834;background:#24251e}.gear-ownership-art{width:77px;height:65px;display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden}.gear-ownership-name{display:flex;flex-direction:column;flex:1;min-width:0;gap:5px}.gear-ownership-name strong{font-size:12px;line-height:1.3;overflow-wrap:anywhere}.gear-ownership-name small{font:400 9px/1.35 var(--mono);color:#9faeaf;overflow-wrap:anywhere}
+.about-dialog{position:relative;padding:32px 34px;max-width:610px;overflow-y:auto;display:block}.about-close{position:absolute;right:19px;top:17px}.about-dialog h2{font:700 36px/1.07 var(--display);margin:14px 30px 14px 0;text-transform:uppercase}.about-dialog p{font-size:12px;line-height:1.8;color:#aeb9b9}.about-rules{border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);padding:18px 0;margin:20px 0}.about-rules>strong{font:700 11px var(--body);color:var(--yellow)}.about-rules p{margin:10px 0}.about-action{margin-top:23px}.about-dialog a{color:var(--yellow)}#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,14px);z-index:300;opacity:0;pointer-events:none;background:#f3d22c;color:#121313;padding:13px 20px;border:1px solid #ffe36f;font:700 11px var(--body);max-width:min(90vw,560px);text-align:center;transition:opacity .16s,transform .16s}#toast.visible{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1220px){.app-shell{width:min(calc(100% - 50px),1400px)}.main-grid{grid-template-columns:325px minmax(0,1fr);gap:21px}.config-panel{padding-right:20px}.deployment-columns{gap:12px}.equipment-image,.equipment-card.wide .equipment-image{width:83px}.equipment-card.compact .equipment-image{width:74px}.equipment-card,.strat-card{gap:7px}.equipment-copy strong,.strat-copy strong{font-size:11px}.strat-art{width:57px;height:59px}.locked-tag{font-size:8px}}
+@media(max-width:960px){.top-pill{display:none}.main-nav{margin-left:auto;margin-right:0}.app-shell{width:min(calc(100% - 40px),780px)}.main-grid{grid-template-columns:1fr;gap:28px}.config-panel{border:0;padding:0;border-bottom:1px solid var(--edge);padding-bottom:21px}.result-panel{min-height:510px}.deployment-columns{gap:22px}.equipment-image,.equipment-card.wide .equipment-image{width:112px}.strat-art{width:70px;height:65px}.equipment-copy strong,.strat-copy strong{font-size:12px}.type-tab{min-height:48px}.ownership-button{margin-top:15px}.panel-heading{margin-bottom:17px}.hero{padding:26px 0}}
+@media(max-width:660px){.app-shell{width:calc(100% - 28px)}.topbar{height:66px;gap:10px}.brand{gap:8px}.brand-name{font-size:24px}.brand-mark{width:34px;height:34px}.brand-mark svg{width:22px;height:22px}.brand-name small{font-size:7px;margin-top:5px}.main-nav{gap:12px}.nav-link{font-size:10px}.nav-count{display:none}.main-nav .nav-link:last-child{display:none}.hero{padding:22px 0 21px}.hero h1{font-size:38px}.hero p{font-size:12px}.serial{display:none}.main-grid{padding:20px 0;gap:22px}.panel-heading h2{font-size:23px}.type-tabs{gap:6px}.type-tab{font-size:11px;gap:5px}.picked-item{min-height:79px}.deployment-columns{grid-template-columns:1fr;gap:10px}.equipment-card,.strat-card{min-height:73px}.equipment-image,.equipment-card.wide .equipment-image{width:100px}.equipment-card.compact .equipment-image{width:95px}.strat-art{width:65px;height:62px}.column-label{margin-top:15px}.result-panel{min-height:500px}.result-footer>span:first-child{display:none}.underbar{margin-bottom:18px}.underbar p{font-size:9px}.underbar-stamp{display:none}.site-footer{display:block;font-size:8px}.site-footer span{display:block;margin-bottom:7px}.site-footer span:last-child{text-align:left}.dialog-backdrop{padding:6px}.dialog-head{padding:18px 17px 15px}.dialog-head h2{font-size:27px}.dialog-head p{font-size:11px}.picker-search{margin:15px 17px 10px}.picker-filters{padding:0 17px 12px}.picker-list{padding:14px 17px;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.pick-card{min-height:133px;display:flex;flex-direction:column;align-items:stretch;padding:7px}.pick-art{width:100%;height:69px}.pick-info strong{font-size:11px}.dialog-foot{padding:12px 17px}.dialog-foot>span{display:none}.dialog-foot button{margin-left:auto}.ownership-tabs{padding:0 17px}.ownership-toolbar{padding:13px 17px 10px}.ownership-actions{padding:0 17px 13px;align-items:flex-start;flex-direction:column;gap:9px}.ownership-content{padding:0 17px 17px}.warbond-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.warbond-cover{height:89px}.warbond-body{padding:9px;min-height:100px}.warbond-body strong{font-size:12px}.warbond-body small{font-size:8px}.ownership-bottom{padding:11px 17px;flex-direction:column;align-items:stretch;gap:9px}.ownership-done{width:100%}.gear-ownership-grid{grid-template-columns:1fr}.about-dialog{padding:25px}.about-dialog h2{font-size:30px}}
+@media(max-width:370px){.brand-name{font-size:20px}.nav-link{font-size:9px}.main-nav{gap:8px}.type-tab{font-size:10px}.picked-visual{width:70px}.equipment-image,.equipment-card.wide .equipment-image{width:82px}.strat-art{width:56px}.result-actions{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Artwork loading never leaves empty black thumbnails. */
+.art-frame{position:relative;display:block;width:100%;height:100%;overflow:hidden}.art-frame>.art-placeholder{position:absolute;inset:0;display:flex}.art-frame>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0}.art-frame.has-image>.art-placeholder{display:none}.art-frame.has-image>img{opacity:1}
+
+.gen-icon{width:23px;height:23px;display:flex;align-items:center;justify-content:center}.gen-icon svg{width:23px;height:23px}.tab-symbol{height:18px;width:21px;display:flex;align-items:center;justify-content:center}.tab-symbol svg{height:18px;width:21px;display:block}
+
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="HELLDROP home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8h16l10 16-5 28H19L14 24 24 8Z" stroke="#F1D034" stroke-width="3" stroke-linejoin="miter"/><path d="M24 8v14m16-14v14M22 33h20" stroke="#F1D034" stroke-width="3" stroke-linecap="square"/><path d="M32 21c3.866 0 7 2.91 7 6.5 0 2.295-1.36 4.05-3.104 5.198C34.26 33.77 33 35.02 33 37v1" stroke="#F1D034" stroke-width="3.5" stroke-linecap="square"/><circle cx="32" cy="45.5" r="2.6" fill="#F1D034"/></svg></span>
+        <span class="brand-name">HELL<span>DROP</span><small>HELLPOD LOADOUT RANDOMIZER</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#loadout" aria-current="page">Loadout</a>
+        <button class="nav-link warbond-nav" type="button" id="top-warbonds">Owned Warbonds <span class="nav-count" id="nav-warbond-count">01</span></button>
+        <button class="nav-link" type="button" id="open-about">About</button>
+      </nav>
+      <span class="top-pill"><span class="online-led"></span><span id="data-status">Local armory</span></span>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> SUPER EARTH / HELLPOD DISPATCH <span class="serial">/ UTILITY 001</span></div>
+          <h1 id="page-title">Random loadout<span>.</span></h1>
+          <p>Pick one guaranteed item. The rest of your loadout is assembled from your available arsenal, with no duplicate stratagems or conflicting backpack and support-weapon combinations.</p>
+        </div>
+        <div class="hero-aside" aria-hidden="true">
+          <span class="aside-code">HD / 02</span>
+          <div class="aside-mark"><span></span><span></span><span></span></div>
+          <div class="aside-bottom"><strong>DEPLOYMENT PROTOCOL</strong><span>01 / LOCK &nbsp;·&nbsp; 02 / ROLL &nbsp;·&nbsp; 03 / DROP</span></div>
+        </div>
+      </section>
+
+      <div class="main-grid" id="loadout">
+        <section class="panel config-panel" aria-labelledby="choose-heading">
+          <div class="panel-heading"><div><div class="section-kicker">01 / SELECTION</div><h2 id="choose-heading">Lock one item</h2><p>Choose the one item you want to guarantee.</p></div></div>
+          <div class="field-label">EQUIPMENT CATEGORY</div>
+          <div class="type-tabs" role="tablist" aria-label="Item category">
+            <button class="type-tab active" data-category="primary" role="tab" aria-selected="true"><span class="tab-number">01</span><span class="tab-symbol"><svg viewBox="0 0 44 48" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 25h34v6H5zM11 19h28v6H11zM16 31v11h7V31M34 31v7h5v-7M8 22l-3-7h7l5 7"/></svg></span><span>Primary</span></button>
+            <button class="type-tab" data-category="secondary" role="tab" aria-selected="false"><span class="tab-number">02</span><span class="tab-symbol"><svg viewBox="0 0 44 48" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 21h30v6H9zM27 27l-5 16h-7l4-16M33 19v3h7v8h-5v-3"/></svg></span><span>Secondary</span></button>
+            <button class="type-tab" data-category="stratagem" role="tab" aria-selected="false"><span class="tab-number">03</span><span class="tab-symbol"><svg viewBox="0 0 44 48" fill="none" stroke="currentColor" stroke-width="3"><path d="M22 5v34M5 22h34M13 13l18 18M31 13 13 31"/></svg></span><span>Stratagem</span></button>
+          </div>
+          <div class="field-label">YOUR GUARANTEED ITEM</div>
+          <button class="picked-item" id="open-picker" type="button" aria-label="Choose a guaranteed item">
+            <span class="picked-visual" id="picked-visual"><span class="empty-icon">⌖</span></span>
+            <span class="picked-copy"><small>LOCKED ITEM</small><b id="picked-name">Select an item</b><span id="picked-detail">Choose from your available arsenal</span></span>
+            <span class="picked-arrow" aria-hidden="true">⌄</span>
+          </button>
+          <button class="browse-btn" id="browse-items" type="button"><span aria-hidden="true">⌕</span> Browse <span id="browse-type">PRIMARY</span> weapons <span aria-hidden="true">→</span></button>
+          <button class="ownership-button" id="open-warbonds" type="button" aria-label="Select your owned Warbonds and equipment">
+            <span class="ownership-icon" aria-hidden="true">▤</span>
+            <span class="ownership-copy"><small>YOUR AVAILABLE EQUIPMENT</small><strong>Warbonds &amp; unlocks</strong><span id="ownership-summary">Free Warbond included · No premiums selected</span></span>
+            <span class="ownership-action">EDIT →</span>
+          </button>
+          <div class="panel-divider"></div>
+          <div class="options-heading"><div class="field-label">INCLUDE IN LOADOUT</div><span class="tiny-note">OPTIONAL SLOTS</span></div>
+          <label class="switch-row"><span><strong>Random armor</strong><small>Include a random armor set</small></span><input type="checkbox" id="option-armor" checked /><i class="switch" aria-hidden="true"></i></label>
+          <label class="switch-row"><span><strong>Random booster</strong><small>Include one random booster</small></span><input type="checkbox" id="option-booster" checked /><i class="switch" aria-hidden="true"></i></label>
+          <div class="rules-box"><span class="rules-led"></span><p>Duplicate and incompatible stratagems are blocked. Expendable support weapons are allowed.</p></div>
+          <button class="generate-btn" id="generate" type="button"><span class="gen-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 7h3c3 0 4 3 6 6l2 3c2 3 4 3 7 3"/><path d="m17 15 4 4-4 4"/><path d="M3 19h3c4 0 5-4 7-7l1-2c2-3 4-3 7-3"/><path d="m17 3 4 4-4 4"/></svg></span><span>GENERATE LOADOUT</span><span class="gen-arrow">↗</span></button>
+          <p class="keyboard-hint">PRESS <kbd>SPACE</kbd> TO ROLL · LOCKED ITEM IS ALWAYS PRESERVED</p>
+        </section>
+
+        <section class="panel result-panel" aria-labelledby="result-heading">
+          <div class="panel-heading result-heading"><div><div class="section-kicker">02 / DEPLOYMENT</div><h2 id="result-heading">Mission loadout</h2><p id="result-subtitle">Ready when you are.</p></div><div class="deployment-state" id="deployment-state"><span class="state-led"></span> STANDBY</div></div>
+          <div id="result-area"><div class="empty-result"><div class="target-reticle"><span>◎</span></div><h3>Awaiting deployment.</h3><p>Choose a guaranteed item, then generate your randomized loadout.</p></div></div>
+          <div id="result-actions" class="result-actions" hidden><button type="button" class="secondary-btn" id="reroll-all">⟳ <span>Reroll unlocked slots</span></button><button type="button" class="secondary-btn" id="copy-loadout">⎘ <span>Copy loadout</span></button></div>
+          <div class="result-footer"><span>HELLDROP / UNOFFICIAL FAN TOOL</span><span id="equipment-counter">COMPATIBILITY CHECK: PASS</span></div>
+        </section>
+      </div>
+
+      <section class="underbar"><span class="underbar-index">RULES ENABLED</span><p>One backpack · One permanent support weapon · Expendables permitted · No duplicate stratagems</p><span class="underbar-stamp" aria-hidden="true">✓</span></section>
+    </main>
+
+    <footer class="site-footer"><span>© 2026 HELLDROP • UNOFFICIAL HELLDIVERS 2 FAN PROJECT</span><span>Game artwork © Arrowhead Game Studios / Sony Interactive Entertainment. Data courtesy of <a href="https://github.com/DionathaGoulart/Helldivers-api" target="_blank" rel="noreferrer">Helldivers API</a> and <a href="https://helldivers.wiki.gg" target="_blank" rel="noreferrer">The Helldivers Wiki</a>.</span></footer>
+  </div>
+
+  <div class="dialog-backdrop" id="picker-backdrop" hidden>
+    <div class="picker-dialog" role="dialog" aria-modal="true" aria-labelledby="picker-heading">
+      <div class="dialog-head"><div><div class="section-kicker">ARMORY / EQUIPMENT SELECTION</div><h2 id="picker-heading">Choose your item</h2><p>This item stays locked when you generate and reroll.</p></div><button type="button" class="close-button" data-close-dialog aria-label="Close">×</button></div>
+      <div class="picker-search"><span>⌕</span><input id="picker-search" type="search" placeholder="Search weapons, equipment, stratagems..." autocomplete="off"/><span class="search-count" id="picker-count">0 ITEMS</span></div>
+      <div id="picker-filters" class="picker-filters"></div>
+      <div id="picker-list" class="picker-list" aria-live="polite"></div>
+      <div class="dialog-foot"><span>SELECTED EQUIPMENT WILL BE LOCKED ACROSS REROLLS</span><button type="button" data-close-dialog>CLOSE ARMORY ↗</button></div>
+    </div>
+  </div>
+
+  <div class="dialog-backdrop" id="ownership-backdrop" hidden>
+    <section class="ownership-dialog" role="dialog" aria-modal="true" aria-labelledby="ownership-heading">
+      <div class="dialog-head ownership-head"><div><div class="section-kicker">ACQUISITION CENTER / PERSONAL ARSENAL</div><h2 id="ownership-heading">Owned Warbonds</h2><p>Only your selected Warbonds and unlocked rewards can be randomized.</p></div><button type="button" class="close-button" data-close-dialog aria-label="Close">×</button></div>
+      <div class="ownership-tabs" role="tablist" aria-label="Ownership settings">
+        <button class="ownership-tab active" type="button" data-ownership-tab="warbonds" role="tab" aria-selected="true">01 / WARBONDS</button>
+        <button class="ownership-tab" type="button" data-ownership-tab="items" role="tab" aria-selected="false">02 / INDIVIDUAL GEAR</button>
+      </div>
+      <div class="ownership-toolbar"><label class="ownership-search"><span aria-hidden="true">⌕</span><input type="search" id="ownership-search" placeholder="Search Warbonds..." aria-label="Search owned equipment" autocomplete="off"></label><div class="ownership-tally" id="ownership-tally">0 OWNED</div></div>
+      <div class="ownership-actions" id="ownership-actions"><span id="ownership-context">Starter gear and Helldivers Mobilize! are included by default.</span><div class="ownership-batch"><button type="button" id="ownership-select-all">SELECT ALL</button><button type="button" id="ownership-clear">CLEAR PREMIUMS</button></div></div>
+      <div class="ownership-content" id="ownership-content" aria-live="polite"></div>
+      <div class="ownership-bottom"><span>Saved locally in this browser. Individual rewards still need to be unlocked with Medals.</span><button class="ownership-done" type="button" data-close-dialog>APPLY & CLOSE →</button></div>
+    </section>
+  </div>
+
+  <div class="dialog-backdrop" id="about-backdrop" hidden><div class="about-dialog" role="dialog" aria-modal="true" aria-labelledby="about-heading"><button type="button" class="close-button about-close" data-close-dialog aria-label="Close">×</button><div class="section-kicker">FIELD MANUAL / ABOUT</div><h2 id="about-heading">One pick. Four stratagems. No contradictions.</h2><p>HELLDROP is an unofficial Helldivers 2 fan utility. Pick a primary, secondary or stratagem to guarantee, then let the generator assemble your remaining gear from currently available equipment.</p><div class="about-rules"><strong>WHAT THE RULES MEAN</strong><p>• An Autocannon, Recoilless Rifle, Spear or any other backpack-fed support weapon uses both your support-weapon and backpack allowances.</p><p>• A Shield Generator Pack, Jump Pack or other backpack prevents a second backpack choice.</p><p>• Normal support weapons cannot be doubled up. Expendable support weapons can accompany another support weapon.</p><p>• Stratagems never repeat, and individual-slot rerolls recheck the entire deployment.</p><p>• Warbond ownership can be configured separately. Rewards from unselected Warbonds and unapproved special gear are excluded. If you have not purchased a reward with Medals, exclude it in Individual Gear.</p></div><p>Weapon renders and stratagem art are loaded from the community-supported <a href="https://helldivers-api.dionatha.com.br" target="_blank" rel="noreferrer">Helldivers API</a>, sourced from the <a href="https://helldivers.wiki.gg" target="_blank" rel="noreferrer">Helldivers Wiki</a>. A smaller built-in item pool works when the catalog is unavailable. All artwork belongs to its respective rights holders.</p><button class="generate-btn about-action" type="button" data-close-dialog>BACK TO DEPLOYMENT <span>→</span></button></div></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script>
+/* HELLDROP | Compatibility-first randomized loadout engine.
+ * Pure functions are deliberately separate from UI and game catalog.
+ */
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  root.HD2Core = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+
+  const randomIndex = (length, random = Math.random) => Math.floor(random() * length);
+  const shuffled = (array, random = Math.random) => {
+    const out = [...array];
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = randomIndex(i + 1, random);
+      [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+  };
+
+  function traits(item) {
+    return Array.isArray(item?.traitIds) ? item.traitIds : [];
+  }
+  function isSupport(item) {
+    return item?.kind === 'support_weapon' || traits(item).includes('support-weapon') || item?.support === true;
+  }
+  function isExpendable(item) {
+    return traits(item).includes('expendable') || item?.expendable === true;
+  }
+  function usesBackpack(item) {
+    return item?.kind === 'backpack' || traits(item).includes('backpack') || item?.backpack === true;
+  }
+  function canAddStratagem(existing, candidate) {
+    if (!candidate?.id || existing.some(item => item.id === candidate.id)) return false;
+    if (usesBackpack(candidate) && existing.some(usesBackpack)) return false;
+    // Disposable support weapons don't consume the permanent support-weapon allowance.
+    if (isSupport(candidate) && !isExpendable(candidate) &&
+        existing.some(item => isSupport(item) && !isExpendable(item))) return false;
+    return true;
+  }
+  function isValidStratagemList(items, max = 4) {
+    if (!Array.isArray(items) || items.length > max) return false;
+    const seen = [];
+    for (const item of items) {
+      if (!canAddStratagem(seen, item)) return false;
+      seen.push(item);
+    }
+    return true;
+  }
+  function pickOne(pool, random = Math.random, excludingId) {
+    const eligible = pool.filter(item => item.id !== excludingId);
+    if (!eligible.length) throw new Error('There are no alternative items in this equipment category.');
+    return eligible[randomIndex(eligible.length, random)];
+  }
+
+  // Randomized backtracking: never returns a partial or incompatible set.
+  function rollStratagems(pool, pinned = [], random = Math.random, slots = 4) {
+    if (!isValidStratagemList(pinned, slots)) throw new Error('Your locked stratagems are incompatible.');
+    const choices = shuffled(pool.filter(item => !pinned.some(p => p.id === item.id)), random);
+    function fill(items, start) {
+      if (items.length === slots) return items;
+      for (let i = start; i < choices.length; i++) {
+        const next = choices[i];
+        if (canAddStratagem(items, next)) {
+          const solution = fill([...items, next], i + 1);
+          if (solution) return solution;
+        }
+      }
+      return null;
+    }
+    const result = fill([...pinned], 0);
+    if (!result) throw new Error('Not enough compatible stratagems in the available equipment pool.');
+    return result;
+  }
+
+  // Ownership is scoped to the equipment section to avoid ID collisions.
+  // Defaults are conservative: starter gear + requisition stratagems + the free
+  // Standard Warbond. Superstore, events and other special items are opt-in.
+  function equipmentKey(section, item) { return section + ':' + item.id; }
+  function isOwned(item, section, ownership = {}) {
+    if (!item?.id) return false;
+    const source = item.source || {};
+    const key = equipmentKey(section, item);
+    if (source.type === 'warbond') {
+      const id = source.warbondId;
+      if (!id || (id !== 'helldivers-mobilize' && !(ownership.warbondIds || []).includes(id))) return false;
+      return !(ownership.excludedIds || []).includes(key);
+    }
+    if (source.type === 'default') return true;
+    if (source.type === 'requisition') return !(ownership.excludedIds || []).includes(key);
+    return (ownership.extraIds || []).includes(key);
+  }
+  function filterCatalogByOwnership(catalog, ownership = {}) {
+    const out = {};
+    for (const section of ['weapons', 'stratagems', 'boosters', 'armors']) {
+      out[section] = (catalog[section] || []).filter(item => isOwned(item, section, ownership));
+    }
+    out.warbonds = catalog.warbonds || [];
+    return out;
+  }
+
+  function generateLoadout(catalog, lock, options = {}, random = Math.random) {
+    const { weapons = [], stratagems = [], boosters = [], armors = [] } = catalog;
+    const { includeArmor = true, includeBooster = true } = options;
+    const from = (category) => weapons.filter(item => item.category === category);
+    const pinned = lock?.category === 'stratagem' ? stratagems.filter(item => item.id === lock.id) : [];
+    if (lock?.category === 'stratagem' && !pinned.length) throw new Error('Locked stratagem is not in the catalog.');
+    const primary = lock?.category === 'primary' ? from('primary').find(item => item.id === lock.id) : pickOne(from('primary'), random);
+    const secondary = lock?.category === 'secondary' ? from('secondary').find(item => item.id === lock.id) : pickOne(from('secondary'), random);
+    if (!primary || !secondary) throw new Error('Choose a valid locked weapon.');
+    return {
+      primary,
+      secondary,
+      throwable: pickOne(from('throwable'), random),
+      armor: includeArmor && armors.length ? pickOne(armors, random) : null,
+      booster: includeBooster && boosters.length ? pickOne(boosters, random) : null,
+      stratagems: rollStratagems(stratagems, pinned, random),
+      lockedId: lock?.id ?? null,
+      createdAt: new Date().toISOString()
+    };
+  }
+
+  function rerollSlot(loadout, slot, catalog, random = Math.random) {
+    if (!loadout) throw new Error('Generate a loadout first.');
+    if (slot.startsWith('stratagem-')) {
+      const index = Number(slot.split('-')[1]);
+      if (!Number.isInteger(index) || index < 0 || index >= loadout.stratagems.length) throw new Error('Unknown slot.');
+      const original = loadout.stratagems[index];
+      if (original.id === loadout.lockedId) throw new Error('The guaranteed item cannot be rerolled.');
+      const others = loadout.stratagems.filter((_, i) => i !== index);
+      const alternatives = catalog.stratagems.filter(item => item.id !== original.id && canAddStratagem(others, item));
+      if (!alternatives.length) throw new Error('No compatible alternatives for this slot.');
+      const updated = [...loadout.stratagems];
+      updated[index] = pickOne(alternatives, random);
+      return { ...loadout, stratagems: updated, createdAt: new Date().toISOString() };
+    }
+    if (!['primary', 'secondary', 'throwable', 'booster', 'armor'].includes(slot)) throw new Error('Unknown slot.');
+    const previous = loadout[slot];
+    if (!previous || previous.id === loadout.lockedId) throw new Error('The guaranteed item cannot be rerolled.');
+    const pool = ['primary', 'secondary', 'throwable'].includes(slot)
+      ? catalog.weapons.filter(item => item.category === slot)
+      : slot === 'booster' ? catalog.boosters : catalog.armors;
+    return { ...loadout, [slot]: pickOne(pool, random, previous.id), createdAt: new Date().toISOString() };
+  }
+
+  return { traits, isSupport, isExpendable, usesBackpack, canAddStratagem, isValidStratagemList, pickOne, rollStratagems, equipmentKey, isOwned, filterCatalogByOwnership, generateLoadout, rerollSlot };
+});
+
+</script><script>
+/* Minimal offline data fallback. The full, image-rich catalog syncs live when online. */
+(function (root) {
+  function toId(name) { return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  const warbondByName = {
+    'AR-23P Liberator Penetrator':'helldivers-mobilize','AR-23C Liberator Concussive':'steeled-veterans','AR-61 Tenderizer':'polar-patriots','BR-14 Adjudicator':'democratic-detonation','SG-225 Breaker':'helldivers-mobilize','SG-225IE Breaker Incendiary':'steeled-veterans','SG-8 Punisher':'helldivers-mobilize','SG-8S Slugger':'helldivers-mobilize','SG-451 Cookout':'freedoms-flame','SMG-37 Defender':'helldivers-mobilize','SMG-72 Pummeler':'polar-patriots','R-63 Diligence':'helldivers-mobilize','R-63CS Diligence Counter Sniper':'helldivers-mobilize','R-36 Eruptor':'democratic-detonation','JAR-5 Dominator':'steeled-veterans','LAS-16 Sickle':'cutting-edge','LAS-5 Scythe':'helldivers-mobilize','PLAS-1 Scorcher':'helldivers-mobilize','PLAS-101 Purifier':'polar-patriots','ARC-12 Blitzer':'cutting-edge','CB-9 Exploding Crossbow':'democratic-detonation','FLAM-66 Torcher':'freedoms-flame',
+    'P-19 Redeemer':'helldivers-mobilize','P-4 Senator':'steeled-veterans','P-113 Verdict':'polar-patriots','GP-31 Grenade Pistol':'democratic-detonation','LAS-7 Dagger':'cutting-edge','LAS-58 Talon':'borderline-justice','SG-22 Bushwhacker':'viper-commandos','P-11 Stim Pistol':'chemical-agents','P-72 Crisper':'freedoms-flame',
+    'G-6 Frag':'helldivers-mobilize','G-16 Impact':'helldivers-mobilize','G-10 Incendiary':'steeled-veterans','G-13 Incendiary Impact':'polar-patriots','G-23 Stun':'cutting-edge','G-3 Smoke':'helldivers-mobilize','G-4 Gas':'chemical-agents','G-50 Seeker':'servants-of-freedom',
+    'CE-35 Trench Engineer':'helldivers-mobilize','FS-05 Marksman':'helldivers-mobilize','SC-34 Infiltrator':'helldivers-mobilize','CM-09 Bonesnapper':'helldivers-mobilize','DP-40 Hero of the Federation':'helldivers-mobilize',
+    'Hellpod Space Optimization':'helldivers-mobilize','Vitality Enhancement':'helldivers-mobilize','Stamina Enhancement':'helldivers-mobilize','Muscle Enhancement':'helldivers-mobilize','Localization Confusion':'cutting-edge','Expert Extraction Pilot':'democratic-detonation','Experimental Infusion':'viper-commandos'
+  };
+  function sourceFor(name) { if (warbondByName[name]) return {type:'warbond',warbondId:warbondByName[name]}; if (name==='P-92 Warrant') return {type:'superstore',label:'Superstore'}; return {type:'default',label:'Starter Equipment'}; }
+  function gun(name, category) { return { id: toId(name), name, category, source: sourceFor(name), imageUrl: '', wikiUrl:'' }; }
+  function strat(name, group, flags = '') {
+    const x = flags.split(' ');
+    const traitIds = [];
+    if (x.includes('weapon')) traitIds.push('support-weapon');
+    if (x.includes('backpack')) traitIds.push('backpack');
+    if (x.includes('expendable')) traitIds.push('expendable');
+    const [kind] = x.includes('weapon') ? ['support_weapon'] : x.includes('backpack') ? ['backpack'] : ['other'];
+    const file = name.replace(/^(MG-43 |GR-8 |AC-8 |FAF-14 |LAS-99 |RL-77 |MLS-4X |EAT-17 |AX\/LAS-5 )/, '');
+    const remote = 'https://raw.githubusercontent.com/nvigneux/Helldivers-2-Stratagems-icons-svg/master/';
+    return { id: toId(name), name, group, kind, traitIds, imageUrl: group ? remote + encodeURIComponent(group) + '/' + encodeURIComponent(file) + '.svg' : '', source:{type:'requisition',label:'Ship Management'} };
+  }
+  root.FALLBACK_CATALOG = {
+    weapons: [
+      ...['AR-23 Liberator','AR-23P Liberator Penetrator','AR-23C Liberator Concussive','AR-61 Tenderizer','BR-14 Adjudicator','SG-225 Breaker','SG-225IE Breaker Incendiary','SG-8 Punisher','SG-8S Slugger','SG-451 Cookout','SMG-37 Defender','SMG-72 Pummeler','R-63 Diligence','R-63CS Diligence Counter Sniper','R-36 Eruptor','JAR-5 Dominator','LAS-16 Sickle','LAS-5 Scythe','PLAS-1 Scorcher','PLAS-101 Purifier','ARC-12 Blitzer','CB-9 Exploding Crossbow','FLAM-66 Torcher'].map(x=>gun(x,'primary')),
+      ...['P-2 Peacemaker','P-19 Redeemer','P-4 Senator','P-113 Verdict','GP-31 Grenade Pistol','LAS-7 Dagger','LAS-58 Talon','SG-22 Bushwhacker','P-11 Stim Pistol','P-72 Crisper','P-92 Warrant'].map(x=>gun(x,'secondary')),
+      ...['G-12 High Explosive','G-6 Frag','G-16 Impact','G-10 Incendiary','G-13 Incendiary Impact','G-23 Stun','G-3 Smoke','G-4 Gas','G-50 Seeker'].map(x=>gun(x,'throwable')),
+    ],
+    stratagems: [
+      strat('MG-43 Machine Gun','Patriotic Administration Center','weapon'),
+      strat('M-105 Stalwart','Patriotic Administration Center','weapon'),
+      strat('MG-206 Heavy Machine Gun','Patriotic Administration Center','weapon'),
+      strat('APW-1 Anti-Materiel Rifle','Patriotic Administration Center','weapon'),
+      strat('GR-8 Recoilless Rifle','Patriotic Administration Center','weapon backpack'),
+      strat('AC-8 Autocannon','Patriotic Administration Center','weapon backpack'),
+      strat('FAF-14 Spear','Patriotic Administration Center','weapon backpack'),
+      strat('RL-77 Airburst Rocket Launcher','Patriotic Administration Center','weapon backpack'),
+      strat('StA-X3 W.A.S.P. Launcher','Patriotic Administration Center','weapon backpack'),
+      strat('EAT-17 Expendable Anti-Tank','Patriotic Administration Center','weapon expendable'),
+      strat('MLS-4X Commando','Patriotic Administration Center','weapon expendable'),
+      strat('RS-422 Railgun','Patriotic Administration Center','weapon'),
+      strat('FLAM-40 Flamethrower','Patriotic Administration Center','weapon'),
+      strat('LAS-98 Laser Cannon','Engineering Bay','weapon'),
+      strat('LAS-99 Quasar Cannon','Engineering Bay','weapon'),
+      strat('GL-21 Grenade Launcher','Engineering Bay','weapon'),
+      strat('ARC-3 Arc Thrower','Engineering Bay','weapon'),
+      strat('B-1 Supply Pack','Engineering Bay','backpack'),
+      strat('SH-32 Shield Generator Pack','Engineering Bay','backpack'),
+      strat('SH-20 Ballistic Shield Backpack','Engineering Bay','backpack'),
+      strat('AX/LAS-5 Rover','Engineering Bay','backpack'),
+      strat('LIFT-850 Jump Pack','Hangar','backpack'),
+      strat('Eagle Airstrike','Hangar'), strat('Eagle 500KG Bomb','Hangar'), strat('Eagle Napalm Airstrike','Hangar'),
+      strat('Eagle Cluster Bomb','Hangar'), strat('Eagle Strafing Run','Hangar'), strat('Eagle 110MM Rocket Pods','Hangar'),
+      strat('Orbital Precision Strike','Bridge'),strat('Orbital Gas Strike','Bridge'),strat('Orbital EMS Strike','Bridge'),
+      strat('Orbital Laser','Orbital Cannons'),strat('Orbital Railcannon Strike','Orbital Cannons'),
+      strat('Orbital 120MM HE Barrage','Orbital Cannons'),strat('Orbital 380MM HE Barrage','Orbital Cannons'),
+      strat('Orbital Napalm Barrage','Orbital Cannons'),strat('Orbital Gatling Barrage','Orbital Cannons'),
+      strat('Autocannon Sentry','Robotics Workshop'),strat('Gatling Sentry','Robotics Workshop'),
+      strat('Rocket Sentry','Robotics Workshop'),strat('Mortar Sentry','Robotics Workshop'),
+      strat('EMS Mortar Sentry','Robotics Workshop'),strat('Patriot Exosuit','Robotics Workshop'),
+      strat('Emancipator Exosuit','Robotics Workshop'),strat('HMG Emplacement','Bridge'),
+      strat('Shield Generator Relay','Bridge'),strat('Tesla Tower','Bridge')
+    ],
+    boosters: ['Hellpod Space Optimization','Vitality Enhancement','Stamina Enhancement','Muscle Enhancement','Localization Confusion','Expert Extraction Pilot','Experimental Infusion'].map(x=>({id:toId(x),name:x,imageUrl:'',source:sourceFor(x)})),
+    armors: ['B-01 Tactical','CE-35 Trench Engineer','FS-05 Marksman','SC-34 Infiltrator','CM-09 Bonesnapper','DP-40 Hero of the Federation'].map(x=>({id:toId(x),name:x,imageUrl:'',source:sourceFor(x)}))
+  };
+  // Known immutable image hashes allow the offline equipment catalog to
+  // display artwork whenever the image CDN is available, even if JSON sync fails.
+  const knownHashes = {
+    weapons: {
+      'ar-23-liberator':'932ff63d','ar-23p-liberator-penetrator':'eaccb0c6','ar-23c-liberator-concussive':'2365e791','ar-61-tenderizer':'fdcfd94d',
+      'br-14-adjudicator':'e0df31bd','sg-225-breaker':'ff1cea2d','sg-225ie-breaker-incendiary':'f185c067','sg-8-punisher':'85e41acb','sg-8s-slugger':'81902ded','sg-451-cookout':'45fd6aaf',
+      'smg-37-defender':'b4d1175c','smg-72-pummeler':'7e02c8ba','r-63-diligence':'92ab1ff8','r-63cs-diligence-counter-sniper':'a6d8b6b0','r-36-eruptor':'cd674472',
+      'jar-5-dominator':'fbf71dcb','las-16-sickle':'a96f3675','las-5-scythe':'b85e3206','plas-1-scorcher':'00273011','plas-101-purifier':'82d1e1e3',
+      'arc-12-blitzer':'d6a26189','cb-9-exploding-crossbow':'b429285e','flam-66-torcher':'83190b85',
+      'p-2-peacemaker':'f9fd9eb3','p-19-redeemer':'a7daaa71','p-4-senator':'f42f0d8c','p-113-verdict':'49fce3b7','gp-31-grenade-pistol':'e0f08127','las-7-dagger':'63222ce0',
+      'las-58-talon':'6175e3f1','sg-22-bushwhacker':'0f5eeb64','p-11-stim-pistol':'ca164fab','p-72-crisper':'a1f86032','p-92-warrant':'c3f0bbec',
+      'g-12-high-explosive':'88e191a4','g-6-frag':'1af39892','g-16-impact':'97e99bf5','g-10-incendiary':'2f5438cd','g-13-incendiary-impact':'398327e0','g-23-stun':'896a83bb',
+      'g-3-smoke':'1854f32b','g-4-gas':'f92ebd4d','g-50-seeker':'386995f0'
+    },
+    stratagems: {
+      'mg-43-machine-gun':'d3665a8a','m-105-stalwart':'b65d3263','mg-206-heavy-machine-gun':'e30a3949','apw-1-anti-materiel-rifle':'c8291f72',
+      'gr-8-recoilless-rifle':'61ebe33a','ac-8-autocannon':'72699b68','faf-14-spear':'24defcf0','rl-77-airburst-rocket-launcher':'7136f815','sta-x3-wasp-launcher':'f6beca75',
+      'eat-17-expendable-anti-tank':'f4b89acb','mls-4x-commando':'0a3ccb6f','rs-422-railgun':'f32ae89f','flam-40-flamethrower':'a7396398','las-98-laser-cannon':'22750656',
+      'las-99-quasar-cannon':'c46fb4c2','gl-21-grenade-launcher':'0f5dee69','arc-3-arc-thrower':'8e02e511','b-1-supply-pack':'f12b0fc6',
+      'sh-32-shield-generator-pack':'974dd7b7','sh-20-ballistic-shield-backpack':'ce6c2968','ax-las-5-rover':'e25b554a','lift-850-jump-pack':'1ae094ed',
+      'eagle-airstrike':'198907ba','eagle-500kg-bomb':'e8fab6dc','eagle-napalm-airstrike':'657ccea2','eagle-cluster-bomb':'8b9cf426','eagle-strafing-run':'94ea6dce',
+      'eagle-110mm-rocket-pods':'f12bdca1','orbital-precision-strike':'6815c83d','orbital-gas-strike':'09531e51','orbital-ems-strike':'bf679220',
+      'orbital-laser':'0f35a480','orbital-railcannon-strike':'d58ff598','orbital-120mm-he-barrage':'e40dba5a','orbital-380mm-he-barrage':'111357ba',
+      'orbital-napalm-barrage':'c5391076','orbital-gatling-barrage':'3ddd5f2a','a-ac-8-autocannon-sentry':'d5826d49',
+      'a-g-16-gatling-sentry':'80acd6d5','a-mls-4x-rocket-sentry':'aa367ac5','a-m-12-mortar-sentry':'8abd9c62',
+      'a-m-23-ems-mortar-sentry':'8cd0455f','exo-45-patriot-exosuit':'76c9e391','exo-49-emancipator-exosuit':'43c72b92',
+      'e-mg-101-hmg-emplacement':'a700e960','fx-12-shield-generator-relay':'b4a84dee','a-arc-3-tesla-tower':'61059edc'
+    },
+    boosters: {'hellpod-space-optimization':'2e64b927','vitality-enhancement':'f088ddcd','stamina-enhancement':'602a5f6a','muscle-enhancement':'d985b39c','localization-confusion':'157911cf','expert-extraction-pilot':'153968b4','experimental-infusion':'8152748f'},
+    armors: {'b-01-tactical':'3fc8df72'}
+  };
+  const fallbackAliases = {'autocannon-sentry':'a-ac-8-autocannon-sentry','gatling-sentry':'a-g-16-gatling-sentry','rocket-sentry':'a-mls-4x-rocket-sentry','mortar-sentry':'a-m-12-mortar-sentry','ems-mortar-sentry':'a-m-23-ems-mortar-sentry','patriot-exosuit':'exo-45-patriot-exosuit','emancipator-exosuit':'exo-49-emancipator-exosuit','hmg-emplacement':'e-mg-101-hmg-emplacement','shield-generator-relay':'fx-12-shield-generator-relay','tesla-tower':'a-arc-3-tesla-tower'};
+  const knownOriginals = {
+    'ar-23-liberator':'AR-23_Liberator_Primary_Render.png',
+    'sg-225-breaker':'SG-225_Breaker_Primary_Render.png',
+    'p-2-peacemaker':'P-2_Peacemaker_Secondary_Render.png',
+    'p-19-redeemer':'P-19_Redeemer_Secondary_Render.png',
+    'g-12-high-explosive':'G-12_High_Explosive_Throwable_Render.png',
+    'g-16-impact':'G-16_Impact_Throwable_Render.png',
+    'b-01-tactical':'B-01_Tactical_v1_Armor_Render.png',
+    'eagle-airstrike':'Eagle_Airstrike_Stratagem_Icon_Background.svg',
+    'orbital-precision-strike':'Orbital_Precision_Strike_Stratagem_Icon_Background.svg',
+    'ac-8-autocannon':'Autocannon_Stratagem_Icon_Background.svg',
+    'gr-8-recoilless-rifle':'Recoilless_Rifle_Stratagem_Icon_Background.svg',
+    'b-1-supply-pack':'Supply_Pack_Stratagem_Icon_Background.svg',
+    'eat-17-expendable-anti-tank':'Expendable_Anti-Tank_Stratagem_Icon_Background.svg',
+    'mls-4x-commando':'Commando_Stratagem_Icon_Background.svg',
+    'sh-32-shield-generator-pack':'Shield_Generator_Pack_Stratagem_Icon_Background.svg'
+  };
+  for (const type of ['weapons','stratagems','boosters','armors']) for(const item of root.FALLBACK_CATALOG[type]) {
+    const upstream = fallbackAliases[item.id] || item.id;
+    const hash = knownHashes[type][upstream];
+    if(!hash)continue;
+    item.image = {url:`/images/v1/${type}/${upstream}.${hash}.webp`,wikiFile:knownOriginals[upstream] || null};
+    item.imageUrl = '';
+  }
+  // Cached Warbond cover fingerprints from the community catalog. The live API
+  // replaces these URLs whenever its manifest changes.
+  const coverHash = {
+    'borderline-justice':'1c583d3f','castellans-creed':'c8e0c046','chemical-agents':'caca3bec','control-group':'a68608e1','cutting-edge':'c7d35f36','democratic-detonation':'ef8dbc3a','dust-devils':'438c20c8','entrenched-division':'4a2c4a84','exo-experts':'f72c123b','force-of-law':'0bd0ce31','freedoms-flame':'ff873dd9','helldivers-mobilize':'db8de605','ironclad-democracy':'f6ff792b','masters-of-ceremony':'47d1c3f5','obedient-democracy-support-troopers':'d9b05843','polar-patriots':'9de30dc5','python-commandos':'83425b3a','redacted-regiment':'dda74f94','righteous-revenants':'9e20bd05','scope-of-authority':'aafba35b','servants-of-freedom':'e6bfbd64','siege-breakers':'010a6f4c','steeled-veterans':'9c9acc8f','truth-enforcers':'33b15619','urban-legends':'3e361a07','viper-commandos':'885203c8'
+  };
+  root.FALLBACK_WARBONDS = [
+    ['helldivers-mobilize','Helldivers Mobilize!','standard','2024-02-08'],
+    ['steeled-veterans','Steeled Veterans','premium','2024-02-08'],
+    ['cutting-edge','Cutting Edge','premium','2024-03-14'],
+    ['democratic-detonation','Democratic Detonation','premium','2024-04-11'],
+    ['polar-patriots','Polar Patriots','premium','2024-05-09'],
+    ['viper-commandos','Viper Commandos','premium','2024-06-13'],
+    ['freedoms-flame',"Freedom's Flame",'premium','2024-08-08'],
+    ['chemical-agents','Chemical Agents','premium','2024-09-19'],
+    ['truth-enforcers','Truth Enforcers','premium','2024-10-31'],
+    ['urban-legends','Urban Legends','premium','2024-12-13'],
+    ['servants-of-freedom','Servants of Freedom','premium','2025-02-06'],
+    ['borderline-justice','Borderline Justice','premium','2025-03-20'],
+    ['masters-of-ceremony','Masters of Ceremony','premium','2025-05-15'],
+    ['force-of-law','Force of Law','premium','2025-06-12'],
+    ['control-group','Control Group','premium','2025-07-17'],
+    ['obedient-democracy-support-troopers','Obedient Democracy Support Troopers','legendary','2025-08-26'],
+    ['dust-devils','Dust Devils','premium','2025-09-04'],
+    ['python-commandos','Python Commandos','premium','2025-12-02'],
+    ['righteous-revenants','Righteous Revenants','legendary','2025-12-18'],
+    ['redacted-regiment','Redacted Regiment','premium','2026-01-22'],
+    ['siege-breakers','Siege Breakers','premium','2026-02-03'],
+    ['entrenched-division','Entrenched Division','premium','2026-03-17'],
+    ['exo-experts','Exo Experts','premium','2026-04-28'],
+    ['castellans-creed',"Castellan's Creed",'legendary','2026-08-12'],
+    ['ironclad-democracy','Ironclad Democracy','premium','2026-09-22'],
+    ['scope-of-authority','Scope of Authority','premium','2026-10-20']
+  ].map(([id,name,type,releaseDate])=>({id,name,type,releaseDate,image:coverHash[id]?{url:`/images/v1/warbonds/${id}.${coverHash[id]}.webp`}:null,upcoming:false}));
+  root.FALLBACK_CATALOG.warbonds = root.FALLBACK_WARBONDS;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+</script><script>
+/* HELLDROP user interface. No frameworks, packages, or API keys required. */
+(function () {
+  'use strict';
+  const Core = window.HD2Core;
+  const API = 'https://helldivers-api.dionatha.com.br';
+  const GITHUB = 'https://raw.githubusercontent.com/DionathaGoulart/Helldivers-api/main/data/v1';
+  const $ = selector => document.querySelector(selector);
+  const $$ = selector => [...document.querySelectorAll(selector)];
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+  const human = value => String(value || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  const groupName = item => human(item.category || item.group || item.kind || item.source?.label || 'Equipment');
+  const optionKey = 'helldrop-options-v1';
+  const cacheKey = 'helldrop-catalog-v3';
+  const ownershipKey = 'helldrop-ownership-v1';
+  let catalog = window.FALLBACK_CATALOG;
+  let category = 'primary';
+  let selection = { category: 'primary', id: 'ar-23-liberator' };
+  let chosenByType = {primary:'ar-23-liberator', secondary:'p-2-peacemaker',stratagem:'ac-8-autocannon'};
+  let result = null;
+  let searchTerm = '';
+  let activeFilter = 'all';
+  let toastTimer = 0;
+  let ownershipTab = 'warbonds';
+  let ownershipSearch = '';
+  let gearFilter = 'all';
+  const savedOwnership = (() => {try {return JSON.parse(localStorage.getItem(ownershipKey) || '{}');}catch{return {};}})();
+  const ownership = {
+    warbondIds: Array.isArray(savedOwnership.warbondIds) ? savedOwnership.warbondIds.filter(id=>typeof id==='string' && id!=='helldivers-mobilize') : [],
+    excludedIds: Array.isArray(savedOwnership.excludedIds) ? savedOwnership.excludedIds : [],
+    extraIds: Array.isArray(savedOwnership.extraIds) ? savedOwnership.extraIds : []
+  };
+  const savedOptions = (() => {try { return JSON.parse(localStorage.getItem(optionKey) || '{}'); } catch { return {}; }})();
+  const options = { includeArmor: savedOptions.includeArmor !== false, includeBooster: savedOptions.includeBooster !== false };
+
+  function availableCatalog() { return Core.filterCatalogByOwnership(catalog, ownership); }
+  function collection(type) {
+    const available = availableCatalog();
+    if (type === 'stratagem') return available.stratagems;
+    return available.weapons.filter(item => item.category === type);
+  }
+  function itemFor(categoryName, id) {return collection(categoryName).find(item => item.id === id);}
+  function ensureSelected() {
+    const current = itemFor(category, selection.id);
+    if (current) return current;
+    const preferred = chosenByType[category];
+    const first = itemFor(category, preferred) || collection(category)[0];
+    if (first) {selection = {category,id:first.id}; chosenByType[category]=first.id;}
+    else selection = {category, id: ''};
+    return first;
+  }
+  // Prefer the immutable catalog art. If a host is temporarily unavailable,
+  // try the wiki's original artwork rather than displaying a broken image.
+  function toImageUrl(item) {
+    const path = item?.image?.url;
+    if (typeof path === 'string' && path.startsWith('/images/')) return API + path;
+    if (typeof path === 'string' && /^https:\/\//i.test(path)) return path;
+    const raw = item?.imageUrl;
+    if (typeof raw === 'string' && /^https:\/\//i.test(raw)) return raw;
+    return '';
+  }
+  function wikiImageUrl(item) {
+    const name = item?.image?.wikiFile;
+    return typeof name === 'string' && name ? 'https://helldivers.wiki.gg/wiki/Special:Redirect/file/' + encodeURIComponent(name.replace(/ /g, '_')) : '';
+  }
+  const svgIcon = {
+    primary: '<path d="M5 25h34v6H5zM11 19h28v6H11zM16 31v11h7V31M34 31v7h5v-7M8 22l-3-7h7l5 7"/>',
+    secondary: '<path d="M9 21h30v6H9zM27 27l-5 16h-7l4-16M33 19v3h7v8h-5v-3"/>',
+    throwable: '<path d="M21 14v6M17 14h8v6h-8zM19 11h4M13 25l5-5h8l5 5v13l-7 6h-6l-7-6z"/>',
+    armor: '<path d="m13 12 9 5 9-5 9 7-5 12-4-2v15H13V29l-4 2-5-12zM18 19l4 5 4-5"/>',
+    booster: '<path d="m22 5 16 9v18l-16 10L6 32V14zM22 14v21M14 22h16"/>',
+    backpack: '<path d="M12 16h20v26H12zM17 16V9h10v7M8 23h4v14H8M32 23h4v14h-4M18 25h8M18 31h8"/>',
+    stratagem: '<path d="M22 5v34M5 22h34M13 13l18 18M31 13 13 31M17 5h10v8H17M17 31h10v8H17"/>'
+  };
+  function fallbackGraphic(item, hint='stratagem') {
+    const kind = item?.category || (Core.usesBackpack(item) ? 'backpack' : item?.kind === 'support_weapon' ? 'primary' : hint);
+    const symbol = svgIcon[kind] || svgIcon.stratagem;
+    return `<span class="art-placeholder" aria-hidden="true"><svg viewBox="0 0 44 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter">${symbol}</svg></span>`;
+  }
+  function art(item, hint = 'stratagem') {
+    const backdrop = fallbackGraphic(item,hint);
+    if (!item) return backdrop;
+    const primary=toImageUrl(item), backup=wikiImageUrl(item);
+    if(!primary && !backup) return backdrop;
+    const url=primary || backup;
+    // The icon remains visible while slow/offline image requests resolve.
+    // On load it is hidden, so transparent weapon renders stay clean.
+    return `<span class="art-frame">${backdrop}<img loading="lazy" decoding="async" src="${esc(url)}" data-wiki-fallback="${esc(primary ? backup : '')}" data-fallback-kind="${esc(item.category || hint)}" alt="${esc(item.name)}" referrerpolicy="no-referrer"></span>`;
+  }
+  function showToast(message) {
+    clearTimeout(toastTimer);
+    const t = $('#toast'); t.textContent = message; t.classList.add('visible');
+    toastTimer = setTimeout(() => t.classList.remove('visible'), 3400);
+  }
+  // If the image loads, replace its illustrated fallback. On failure, try
+  // the verified wiki original and retain the category fallback meanwhile.
+  document.addEventListener('load',event=>{
+    const image=event.target;
+    if(image?.tagName === 'IMG') image.closest('.art-frame')?.classList.add('has-image');
+  },true);
+  document.addEventListener('error',event=>{
+    const image=event.target;
+    if(image?.tagName !== 'IMG')return;
+    const wiki=image.dataset.wikiFallback;
+    if(wiki && image.dataset.triedWiki !== 'yes'){
+      image.dataset.triedWiki='yes';image.src=wiki;return;
+    }
+    image.remove();
+  },true);
+
+  function updateSelectionUI() {
+    const item = ensureSelected();
+    $('#generate').disabled = !item;
+    updateOwnershipSummary();
+    $$('.type-tab').forEach(tab => {
+      const active = tab.dataset.category === category;
+      tab.classList.toggle('active', active);tab.setAttribute('aria-selected', String(active));
+    });
+    $('#browse-type').textContent = category.toUpperCase();
+    $('#picked-name').textContent = item?.name || 'Select an item';
+    $('#picked-detail').textContent = category === 'stratagem' ? tagLine(item) : (item?.source?.label || human(item?.subcategory || category));
+    $('#picked-visual').innerHTML = art(item, category);
+  }
+  function tagLine(item) {
+    if (!item) return 'NO EQUIPMENT SELECTED';
+    const tags = [];
+    if (Core.isSupport(item)) tags.push(Core.isExpendable(item) ? 'Expendable support weapon' : 'Support weapon');
+    if (Core.usesBackpack(item)) tags.push('Backpack');
+    if (!tags.length) tags.push(groupName(item));
+    return tags.join(' • ');
+  }
+  function setCategory(next) {
+    if (next === category) return;
+    category = next;
+    selection = {category:next,id:chosenByType[next]};
+    ensureSelected();
+    result = null;
+    renderResult(); updateSelectionUI();
+  }
+  function chooseItem(id) {
+    const item = itemFor(category, id); if (!item) return;
+    selection = {category,id}; chosenByType[category] = id;
+    result = null;
+    updateSelectionUI();renderResult();closeDialogs();
+    showToast('GUARANTEED ITEM LOCKED: ' + item.name);
+  }
+  function getPoolFilters() {
+    return category !== 'stratagem' ? ['all'] : ['all','support','backpack','expendable','orbital','eagle','defense'];
+  }
+  function filterLabel(filter) {return ({all:'All equipment',support:'Support weapons',backpack:'Backpacks',expendable:'Expendables',orbital:'Orbitals',eagle:'Eagles',defense:'Defense'})[filter];}
+  function passesFilter(item) {
+    if (activeFilter === 'all') return true;
+    const g = (groupName(item) + ' ' + String(item.kind || '') + ' ' + String(item.permitType || '')).toLowerCase();
+    if (activeFilter === 'support') return Core.isSupport(item);
+    if (activeFilter === 'backpack') return Core.usesBackpack(item);
+    if (activeFilter === 'expendable') return Core.isExpendable(item);
+    if (activeFilter === 'orbital') return g.includes('orbital') || g.includes('bridge') && item.name.toLowerCase().startsWith('orbital');
+    if (activeFilter === 'eagle') return item.name.toLowerCase().startsWith('eagle') || g.includes('eagle');
+    if (activeFilter === 'defense') return /sentry|mine|mortar|emplacement|tower|relay|battlement/.test(item.name.toLowerCase()) || g.includes('robotics');
+    return true;
+  }
+  function drawPicker() {
+    const pool = collection(category);
+    const term = searchTerm.trim().toLowerCase();
+    const filtered = pool.filter(item => passesFilter(item) && (!term || [item.name,item.source?.label,item.kind,item.subcategory].filter(Boolean).some(v => String(v).toLowerCase().includes(term))));
+    $('#picker-count').textContent = filtered.length + ' ITEMS';
+    $('#picker-filters').innerHTML = getPoolFilters().map(k => `<button type="button" class="filter-chip ${k===activeFilter?'active':''}" data-filter="${k}">${filterLabel(k)}</button>`).join('');
+    $('#picker-list').innerHTML = filtered.length ? filtered.map(item => {
+      const selected = item.id === selection.id;
+      const subtype = category === 'stratagem' ? tagLine(item) : (item.source?.label || human(item.subcategory || category));
+      return `<button type="button" class="pick-card ${selected?'selected':''}" data-select="${esc(item.id)}"><span class="pick-art">${art(item,category)}</span><span class="pick-info"><strong>${esc(item.name)}</strong><small>${esc(subtype)}</small>${selected?'<small class="chosen-tag">● CURRENTLY LOCKED</small>':''}</span></button>`;
+    }).join('') : '<div class="no-results">NO MATCHING EQUIPMENT FOUND. TRY A DIFFERENT SEARCH.</div>';
+  }
+  function openPicker() {
+    searchTerm='';activeFilter='all';
+    $('#picker-search').value='';
+    $('#picker-heading').textContent= category === 'stratagem' ? 'Select a stratagem.' : `Select a ${category}.`;
+    $('#picker-backdrop').hidden=false;
+    document.body.style.overflow='hidden';
+    drawPicker();
+    $('#picker-search').focus();
+  }
+  function openAbout() {$('#about-backdrop').hidden=false;document.body.style.overflow='hidden';}
+  function closeDialogs() {$$('.dialog-backdrop').forEach(x => x.hidden=true);document.body.style.overflow='';}
+
+  function saveOwnership() {
+    try { localStorage.setItem(ownershipKey, JSON.stringify(ownership)); } catch {}
+    result = null;
+    ensureSelected();
+    updateSelectionUI();
+    renderResult();
+    renderOwnership();
+  }
+  function updateOwnershipSummary() {
+    const n = ownership.warbondIds.length;
+    const x = ownership.extraIds.length;
+    const excluded = ownership.excludedIds.length;
+    $('#nav-warbond-count').textContent = String(n+1).padStart(2,'0');
+    $('#top-warbonds').setAttribute('aria-label', `Owned Warbonds: ${n+1} enabled. Configure ownership`);
+    $('#ownership-summary').textContent = `Standard + ${n} premium/legendary selected` +
+      (x ? ` · ${x} special item${x===1?'':'s'}` : '') + (excluded ? ` · ${excluded} reward${excluded===1?'':'s'} excluded` : '');
+  }
+  function allWarbonds() {
+    return [...(catalog.warbonds || window.FALLBACK_WARBONDS || [])]
+      .filter(w => w?.id && !w.upcoming)
+      .sort((a,b) => (a.type==='standard'?-1:b.type==='standard'?1:0) || String(b.releaseDate||'').localeCompare(String(a.releaseDate||'')));
+  }
+  function warbondCounts() {
+    const counts = {};
+    for (const section of ['weapons','stratagems','boosters','armors']) {
+      for (const item of catalog[section]||[]) {
+        const id=item.source?.warbondId;
+        if (item.source?.type !== 'warbond' || !id) continue;
+        counts[id] ??= {weapons:0,stratagems:0,boosters:0,armors:0};
+        counts[id][section]++;
+      }
+    }
+    return counts;
+  }
+  function chooseWarbond(id) {
+    const wb=allWarbonds().find(x=>x.id===id);
+    if (!wb || wb.type==='standard') return;
+    if (ownership.warbondIds.includes(id)) ownership.warbondIds=ownership.warbondIds.filter(x=>x!==id);
+    else ownership.warbondIds.push(id);
+    saveOwnership();
+  }
+  function allGearCandidates() {
+    const out=[];
+    for(const section of ['weapons','stratagems','boosters','armors']){
+      for(const item of catalog[section]||[]) {
+        const src=item.source?.type;
+        if(src==='default')continue;
+        if(src==='warbond' && item.source?.warbondId!=='helldivers-mobilize' &&
+          !ownership.warbondIds.includes(item.source?.warbondId))continue;
+        out.push({section,item,key:Core.equipmentKey(section,item),isWarbond:src==='warbond',isRequisition:src==='requisition',includedByDefault:src==='warbond'||src==='requisition'});
+      }
+    }
+    return out;
+  }
+  function toggleGear(key) {
+    const entry=allGearCandidates().find(x=>x.key===key);
+    if(!entry)return;
+    const prop=entry.includedByDefault ? 'excludedIds' : 'extraIds';
+    const list=ownership[prop];
+    if(list.includes(key)) ownership[prop]=list.filter(x=>x!==key);
+    else list.push(key);
+    saveOwnership();
+  }
+  function renderWarbonds() {
+    const term=ownershipSearch.toLowerCase();
+    const all=allWarbonds().filter(w=> !term || (w.name+' '+w.type).toLowerCase().includes(term));
+    const counts=warbondCounts();
+    $('#ownership-tally').textContent=(ownership.warbondIds.length+1)+' / '+allWarbonds().length+' WARBONDS';
+    $('#ownership-context').textContent='Standard Warbond included automatically. Select any Premium or Legendary Warbonds you own.';
+    $('#ownership-select-all').hidden=false;
+    $('#ownership-clear').hidden=false;
+    $('#ownership-content').innerHTML=all.length ? `<div class="warbond-grid">${all.map(w=>{
+      const standard=w.type==='standard';
+      const checked=standard || ownership.warbondIds.includes(w.id);
+      const c=counts[w.id]||{};
+      const num=(c.weapons||0)+(c.armors||0)+(c.stratagems||0)+(c.boosters||0);
+      const tags=[c.weapons?`${c.weapons} WEAPONS`:'',c.armors?`${c.armors} ARMOR`:'',c.stratagems?`${c.stratagems} STRATS`:'',c.boosters?`${c.boosters} BOOSTERS`:''].filter(Boolean).join(' / ');
+      return `<button type="button" class="warbond-card ${checked?'owned':''}" data-warbond="${esc(w.id)}" role="checkbox" aria-checked="${checked}" ${standard?'disabled aria-label="Standard Warbond, always included"':''}>
+        <span class="warbond-cover">${art(w,'warbond')}<span class="cover-tier">${esc(human(w.type))}</span></span>
+        <span class="warbond-body"><strong>${esc(w.name)}</strong><small>${tags || 'SPECIAL REWARDS TRACK'}</small><span class="warbond-status"><span class="wb-check">${checked?'✓':'+'}</span>${standard?'FREE / INCLUDED':checked?'OWNED':'NOT OWNED'}</span></span>
+      </button>`;
+    }).join('')}</div>` : '<div class="no-results">NO MATCHING WARBONDS FOUND.</div>';
+  }
+  function renderIndividualGear() {
+    const term=ownershipSearch.toLowerCase();
+    const items=allGearCandidates().filter(x=> {
+      if (gearFilter==='warbond'&&!x.isWarbond)return false;
+      if (gearFilter==='special'&&(x.isWarbond||x.isRequisition))return false;
+      if (gearFilter==='requisition'&&!x.isRequisition)return false;
+      return !term || [x.item.name,x.item.source?.label,x.section].filter(Boolean).some(v=>v.toLowerCase().includes(term));
+    });
+    const totalExtras=ownership.extraIds.length;
+    const totalExcluded=ownership.excludedIds.length;
+    $('#ownership-tally').textContent=`${totalExtras} EXTRA OWNED · ${totalExcluded} EXCLUDED`;
+    $('#ownership-context').textContent='Uncheck unclaimed Warbond rewards and requisition stratagems. Add Superstore or special gear individually.';
+    $('#ownership-select-all').hidden=true;
+    $('#ownership-clear').hidden=true;
+    const filters=[['all','ALL'],['warbond','WARBOND REWARDS'],['requisition','REQUISITION'],['special','SUPERSTORE + SPECIAL']];
+    const tabs=`<div class="gear-filters">${filters.map(([key,label])=>`<button type="button" class="gear-filter ${key===gearFilter?'active':''}" data-gear-filter="${key}">${label}</button>`).join('')}</div>`;
+    const content=items.length ? `<div class="gear-ownership-grid">${items.map(({section,item,key,includedByDefault})=>{
+      const checked=includedByDefault ? !ownership.excludedIds.includes(key) : ownership.extraIds.includes(key);
+      const sourceName=item.source?.label || human(item.source?.type||'Special gear');
+      return `<button type="button" class="gear-ownership-card ${checked?'gear-owned':''}" data-gear-key="${esc(key)}" role="checkbox" aria-checked="${checked}"><span class="gear-ownership-art">${art(item,section==='weapons'?item.category:section.slice(0,-1))}</span><span class="gear-ownership-name"><strong>${esc(item.name)}</strong><small>${esc(sourceName)} · ${esc(human(section))}</small></span><span class="gear-ownership-toggle">${checked?'✓':'+'}</span></button>`;
+    }).join('')}</div>` : '<div class="no-results">NO EQUIPMENT IN THIS VIEW. SEARCH AGAIN OR SELECT A WARBOND FIRST.</div>';
+    $('#ownership-content').innerHTML=tabs+content;
+  }
+  function renderOwnership() {
+    $$('.ownership-tab').forEach(tab=>{
+      const selected=tab.dataset.ownershipTab===ownershipTab;
+      tab.classList.toggle('active',selected);
+      tab.setAttribute('aria-selected',String(selected));
+    });
+    $('#ownership-search').placeholder=ownershipTab==='warbonds'?'Search Warbonds...':'Search individual equipment...';
+    if(ownershipTab==='warbonds')renderWarbonds();else renderIndividualGear();
+  }
+  function openWarbonds() {
+    ownershipTab='warbonds'; ownershipSearch='';gearFilter='all';
+    $('#ownership-search').value='';
+    $('#ownership-backdrop').hidden=false;
+    document.body.style.overflow='hidden';
+    renderOwnership();
+    $('#ownership-search').focus();
+  }
+
+  function equipmentCard(item, type, label, extraClass='',symbol='primary') {
+    const isLocked = item?.id === result?.lockedId;
+    const sub = type === 'primary' || type === 'secondary' ? human(item?.subcategory || type) : (item?.source?.label || label);
+    return `<article class="equipment-card ${extraClass} ${isLocked?'locked':''}">
+      <div class="equipment-image">${art(item,type)}</div>
+      <div class="equipment-copy"><small>${esc(label)}</small><strong>${esc(item?.name || 'None')}</strong><span class="source-line">${esc(sub)}</span></div>
+      <div class="slot-end">${isLocked ? '<span class="locked-tag" title="Guaranteed item">LOCKED</span>' : ''}
+      ${item && !isLocked ? `<button class="card-reroll" type="button" data-reroll="${type}" title="Reroll ${esc(label)}" aria-label="Reroll ${esc(label)}">↻</button>` : ''}</div>
+    </article>`;
+  }
+  function stratCard(item, i) {
+    const locked = item.id === result?.lockedId;
+    const tags = [];
+    if (Core.isSupport(item)) tags.push('SUPPORT');
+    if (Core.usesBackpack(item)) tags.push('BACKPACK');
+    if (Core.isExpendable(item)) tags.push('EXPENDABLE');
+    const type=Core.usesBackpack(item)?'backpack':Core.isSupport(item)?'support':item.name.toLowerCase().startsWith('eagle')?'eagle':item.name.toLowerCase().startsWith('orbital')?'orbital':'other';
+    return `<article class="strat-card ${locked?'locked':''} kind-${type}">
+      <div class="strat-art">${art(item,'stratagem')}</div><div class="strat-copy"><span class="snum">STRATAGEM 0${i+1}</span><strong>${esc(item.name)}</strong>${tags.length?`<div class="strat-badges">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`:''}</div>
+      <div class="slot-end">${locked?'<span class="locked-tag" title="Guaranteed item">LOCKED</span>':`<button class="card-reroll" type="button" data-reroll="stratagem-${i}" title="Reroll stratagem ${i+1}" aria-label="Reroll stratagem ${i+1}">↻</button>`}</div>
+    </article>`;
+  }
+  function renderResult() {
+    if (!result) {
+      $('#result-subtitle').textContent='Ready when you are.';
+      $('#deployment-state').classList.remove('ready');
+      $('#deployment-state').innerHTML='<span class="state-led"></span> STANDBY';
+      $('#result-area').innerHTML='<div class="empty-result"><div class="target-reticle"><span>◎</span></div><h3>Awaiting deployment.</h3><p>Choose an item to lock, then generate a compatible loadout.</p></div>';
+      $('#result-actions').hidden=true;
+      $('#equipment-counter').textContent='COMPATIBILITY RULES ENABLED';
+      return;
+    }
+    const passed = Core.isValidStratagemList(result.stratagems) && result.stratagems.length===4;
+    const extras = [equipmentCard(result.throwable,'throwable','THROWABLE','compact')];
+    if (result.armor) extras.push(equipmentCard(result.armor,'armor','ARMOR','compact'));
+    if (result.booster) extras.push(equipmentCard(result.booster,'booster','BOOSTER','compact'));
+    $('#result-subtitle').textContent='A complete, compatible deployment.';
+    $('#deployment-state').classList.add('ready');
+    $('#deployment-state').innerHTML='<span class="state-led"></span> READY';
+    $('#result-area').innerHTML=`<div class="loadout-header"><span>LOADOUT ASSIGNMENT</span><span class="loadout-id">${esc(new Date(result.createdAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}))}</span></div>
+      <div class="deployment-columns"><div class="kit-col"><div class="column-label">EQUIPMENT <span>05 SLOTS</span></div><div class="kit-list">${equipmentCard(result.primary,'primary','PRIMARY WEAPON','wide')}${equipmentCard(result.secondary,'secondary','SECONDARY WEAPON','wide')}${extras.join('')}</div></div><div class="strat-col"><div class="column-label">STRATAGEMS <span>04 SLOTS</span></div><div class="strat-list">${result.stratagems.map(stratCard).join('')}</div></div></div>`;
+    $('#result-actions').hidden=false;
+    $('#equipment-counter').textContent=passed?'COMPATIBILITY CHECK: PASS':'COMPATIBILITY CHECK: ERROR';
+  }
+  function generate() {
+    ensureSelected();
+    try { result = Core.generateLoadout(availableCatalog(),selection,options);renderResult(); }
+    catch(error){showToast(error.message || 'Unable to generate deployment.');}
+  }
+  function reroll(slot) {
+    try {result=Core.rerollSlot(result,slot,availableCatalog());renderResult();}
+    catch(error){showToast(error.message || 'No compatible rerolls available.');}
+  }
+  function textLoadout() {
+    if (!result) return '';
+    const all=[`HELLDROP // DEPLOYMENT`, `GUARANTEED: ${itemFor(selection.category,selection.id)?.name || 'Unknown'}`,``, `PRIMARY: ${result.primary.name}`,`SECONDARY: ${result.secondary.name}`,`THROWABLE: ${result.throwable.name}`];
+    if(result.armor)all.push(`ARMOR: ${result.armor.name}`);
+    if(result.booster)all.push(`BOOSTER: ${result.booster.name}`);
+    all.push('','STRATAGEMS:',...result.stratagems.map((item,i)=>`${i+1}. ${item.name}`),'','Generated with HELLDROP (unofficial fan tool)');
+    return all.join('\n');
+  }
+  async function copyResult() {
+    const value = textLoadout();if(!value)return;
+    try {await navigator.clipboard.writeText(value);showToast('LOADOUT COPIED TO CLIPBOARD');}
+    catch {const area=document.createElement('textarea');area.value=value;document.body.appendChild(area);area.select();try{document.execCommand('copy');showToast('LOADOUT COPIED TO CLIPBOARD');}catch{showToast('COPY NOT AVAILABLE IN THIS BROWSER');}area.remove();}
+  }
+
+  function normalize(raw, section) {
+    return raw.filter(item => item?.id && item?.name && !item.upcoming)
+      .filter(item => section!=='stratagems' || item.availability==='loadout')
+      .filter(item => section!=='weapons' || ['primary','secondary','throwable'].includes(item.category))
+      .map(item => ({
+        id:item.id, name:item.name, category:item.category, subcategory:item.subcategory,
+        kind:item.kind, permitType:item.permitType, traitIds:item.traitIds || [],
+        source:item.source?{type:item.source.type,label:item.source.label,warbondId:item.source.warbondId || null}:null,
+        image:item.image?{url:item.image.url,wikiFile:item.image.wikiFile || null}:null,
+        wikiUrl:item.wiki?.url || ''
+      }));
+  }
+  async function fetchJSON(url) {
+    const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
+    try {const response=await fetch(url,{signal:controller.signal});if(!response.ok)throw new Error('HTTP '+response.status);const body=await response.json();if(!Array.isArray(body.data))throw new Error('Invalid catalog format');return body;}
+    finally {clearTimeout(timeout);}
+  }
+  async function catalogFrom(origin) {
+    const types=['weapons','stratagems','boosters','armors'];
+    const responses=await Promise.all(types.map(type => fetchJSON(origin+'/'+type+'.json')));
+    const out={};
+    types.forEach((type,i)=>out[type]=normalize(responses[i].data,type));
+    try {const wb=await fetchJSON(origin+'/warbonds.json');out.warbonds=wb.data.filter(w=>w.id&&w.name&&!w.upcoming).map(w=>({id:w.id,name:w.name,type:w.type,releaseDate:w.releaseDate,image:w.image?{url:w.image.url,wikiFile:w.image.wikiFile || null}:null}));}
+    catch {out.warbonds=window.FALLBACK_WARBONDS;}
+    if(out.weapons.length<30 || out.stratagems.length<35)throw new Error('Catalog is incomplete');
+    return {catalog:out, meta:responses[0].meta};
+  }
+  function setDataStatus(label,connected=false) {
+    $('#data-status').textContent=label;
+    $('.top-pill').classList.toggle('connected',connected);
+  }
+  async function syncData() {
+    const sources = [{url:API+'/v1',name:'Live catalog'},{url:GITHUB,name:'GitHub mirror'}];
+    for(const s of sources){
+      try {
+        const res=await catalogFrom(s.url);
+        catalog=res.catalog;
+        try{localStorage.setItem(cacheKey,JSON.stringify({catalog,storedAt:Date.now()}));}catch{}
+        ensureSelected();updateSelectionUI(); if(result){result=null;renderResult();}
+        const count=catalog.weapons.length+catalog.stratagems.length+catalog.boosters.length+catalog.armors.length;
+        setDataStatus(count+' ITEMS SYNCED',true);
+        return;
+      }catch(error){ console.info('Catalog source unavailable:',s.name,error.message); }
+    }
+    try{
+      const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
+      if(cached?.catalog?.stratagems?.length){catalog=cached.catalog;ensureSelected();updateSelectionUI();setDataStatus('CACHED ARMORY',true);return;}
+    }catch{}
+    setDataStatus('OFFLINE ARMORY',false);
+    updateSelectionUI();
+  }
+  function init() {
+    $('#option-armor').checked=options.includeArmor;$('#option-booster').checked=options.includeBooster;
+    $$('.type-tab').forEach(tab=>tab.addEventListener('click',()=>setCategory(tab.dataset.category)));
+    $('#open-picker').addEventListener('click',openPicker);$('#browse-items').addEventListener('click',openPicker);
+    $('#open-about').addEventListener('click',openAbout);
+    $('#open-warbonds').addEventListener('click',openWarbonds);
+    $('#top-warbonds').addEventListener('click',openWarbonds);
+    $$('.ownership-tab').forEach(tab=>tab.addEventListener('click',()=>{ownershipTab=tab.dataset.ownershipTab;ownershipSearch='';gearFilter='all';$('#ownership-search').value='';renderOwnership();}));
+    $('#ownership-search').addEventListener('input',event=>{ownershipSearch=event.target.value.trim();renderOwnership();});
+    $('#ownership-content').addEventListener('click',event=>{const wb=event.target.closest('[data-warbond]');if(wb){chooseWarbond(wb.dataset.warbond);return;}const gear=event.target.closest('[data-gear-key]');if(gear){toggleGear(gear.dataset.gearKey);return;}const filter=event.target.closest('[data-gear-filter]');if(filter){gearFilter=filter.dataset.gearFilter;renderOwnership();}});
+    $('#ownership-select-all').addEventListener('click',()=>{ownership.warbondIds=allWarbonds().filter(w=>w.type!=='standard').map(w=>w.id);saveOwnership();});
+    $('#ownership-clear').addEventListener('click',()=>{ownership.warbondIds=[];saveOwnership();});
+    $('#generate').addEventListener('click',generate);
+    $('#reroll-all').addEventListener('click',generate);
+    $('#copy-loadout').addEventListener('click',copyResult);
+    ['armor','booster'].forEach(type=>$('#option-'+type).addEventListener('change',event=>{
+      options[type==='armor'?'includeArmor':'includeBooster']=event.target.checked;
+      try{localStorage.setItem(optionKey,JSON.stringify(options));}catch{}
+      if(result)generate();
+    }));
+    $('#picker-search').addEventListener('input',event=>{searchTerm=event.target.value;drawPicker();});
+    $('#picker-filters').addEventListener('click',event=>{const chip=event.target.closest('[data-filter]');if(!chip)return;activeFilter=chip.dataset.filter;drawPicker();});
+    $('#picker-list').addEventListener('click',event=>{const card=event.target.closest('[data-select]');if(card)chooseItem(card.dataset.select);});
+    $('#result-area').addEventListener('click',event=>{const button=event.target.closest('[data-reroll]');if(button && !button.disabled)reroll(button.dataset.reroll);});
+    $$('[data-close-dialog]').forEach(button=>button.addEventListener('click',closeDialogs));
+    $$('.dialog-backdrop').forEach(backdrop=>backdrop.addEventListener('click',event=>{if(event.target===backdrop)closeDialogs();}));
+    window.addEventListener('keydown',event=>{
+      if(event.key==='Escape'){closeDialogs();return;}
+      if(event.code==='Space' && !event.repeat && $$('.dialog-backdrop').every(d=>d.hidden) &&
+        !['INPUT','TEXTAREA','BUTTON','SELECT'].includes(document.activeElement?.tagName)) {
+        event.preventDefault();generate();
+      }
+    });
+    ensureSelected();updateSelectionUI();renderResult();
+    syncData();
+  }
+  init();
+})();
+
+</script>
+</body>
+</html>
