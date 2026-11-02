@@ -31,3 +31,7 @@ To update the site, replace the root `index.html`. GitHub Pages will redeploy au
 Images and catalog data are fetched from the community-supported [Helldivers API](https://github.com/DionathaGoulart/Helldivers-api) and the [Helldivers Wiki](https://helldivers.wiki.gg/). An internet connection is needed for live data and most game artwork. If unavailable, a smaller built-in catalog and placeholder artwork are used.
 
 This project is unofficial and is not endorsed by or affiliated with Arrowhead Game Studios or Sony Interactive Entertainment. Game artwork and trademarks belong to their respective owners.
+
+## Troubleshooting deployment
+
+If GitHub Pages displays a 404, visit [Actions](https://github.com/awjackson00/HellDrop/actions) and check that **pages build and deployment** has succeeded. The site is deployed from the `main` branch at `/(root)` and requires `index.html` in the repository root. The project URL preserves repository casing: https://awjackson00.github.io/HellDrop/ .
