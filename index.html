@@ -48,7 +48,7 @@
 @media(max-width:660px){.ownership-tabs{gap:13px;padding:0 17px}.ownership-tab{font-size:9px;padding:13px 0}.store-lede{padding:11px 12px;gap:9px}.store-lede small{font-size:9px}.store-filter-count{display:none}}
 @media(max-width:375px){.ownership-tabs{gap:9px}.ownership-tab{font-size:8px}}
 </style>
-  <link rel="stylesheet" href="./interface.css?v=5" />
+  <link rel="stylesheet" href="./interface.css?v=6" />
 </head>
 <body>
   <div class="app-shell">
@@ -83,9 +83,9 @@
           <div class="panel-heading"><div><div class="section-kicker">01 / SELECTION</div><h2 id="choose-heading">Lock one item</h2><p>Choose the gear you want to keep.</p></div></div>
           <div class="field-label">EQUIPMENT CATEGORY</div>
           <div class="type-tabs" role="tablist" aria-label="Item category">
-            <button class="type-tab active" data-category="primary" role="tab" aria-selected="true"><span class="tab-number">01</span><span class="tab-symbol"><img src="./assets/icons/primary-liberator.svg" alt="" aria-hidden="true" width="64" height="38" decoding="async"/></span><span>Primary</span></button>
-            <button class="type-tab" data-category="secondary" role="tab" aria-selected="false"><span class="tab-number">02</span><span class="tab-symbol"><img src="./assets/icons/secondary-peacemaker.svg" alt="" aria-hidden="true" width="64" height="38" decoding="async"/></span><span>Secondary</span></button>
-            <button class="type-tab" data-category="stratagem" role="tab" aria-selected="false"><span class="tab-number">03</span><span class="tab-symbol"><img src="./assets/icons/stratagem-ball.svg" alt="" aria-hidden="true" width="64" height="38" decoding="async"/></span><span>Stratagem</span></button>
+            <button class="type-tab active" data-category="primary" role="tab" aria-selected="true"><span class="tab-number">01</span><span class="tab-symbol"><img class="category-art weapon-render" src="https://helldivers-api.dionatha.com.br/images/v1/weapons/ar-23-liberator.932ff63d.webp" width="96" height="48" alt="" aria-hidden="true" title="AR-23 Liberator" loading="eager" decoding="async" onerror="this.hidden=true"/><span class="tab-fallback" aria-hidden="true">01</span></span><span>Primary</span></button>
+            <button class="type-tab" data-category="secondary" role="tab" aria-selected="false"><span class="tab-number">02</span><span class="tab-symbol"><img class="category-art weapon-render" src="https://helldivers-api.dionatha.com.br/images/v1/weapons/p-2-peacemaker.f9fd9eb3.webp" width="96" height="48" alt="" aria-hidden="true" title="P-2 Peacemaker" loading="eager" decoding="async" onerror="this.hidden=true"/><span class="tab-fallback" aria-hidden="true">02</span></span><span>Secondary</span></button>
+            <button class="type-tab" data-category="stratagem" role="tab" aria-selected="false"><span class="tab-number">03</span><span class="tab-symbol"><img class="category-art stratagem-render" src="https://helldivers-api.dionatha.com.br/images/v1/stratagems/orbital-precision-strike.6815c83d.webp" width="48" height="48" alt="" aria-hidden="true" title="Orbital Precision Strike stratagem icon" loading="eager" decoding="async" onerror="this.hidden=true"/><span class="tab-fallback" aria-hidden="true">03</span></span><span>Stratagem</span></button>
           </div>
           <div class="field-label">YOUR GUARANTEED ITEM</div>
           <button class="picked-item" id="open-picker" type="button" aria-label="Choose a guaranteed item">
