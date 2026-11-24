@@ -355,3 +355,12 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline:2px solid v
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { transition-duration:0.01ms !important; animation-duration:0.01ms !important; scroll-behavior:auto !important; }
 }
+
+/* Superstore merchandising strip: information, not another card. */
+.store-lede { margin:0 0 15px; padding:7px 10px; border:0; border-left:2px solid var(--yellow); background:none; gap:11px; }
+.store-lede-mark { width:27px; height:30px; color:var(--yellow); border:0; background:transparent; font:700 16px var(--display); }
+.store-lede strong { font:600 13px var(--body); color:#f0f2ea; }
+.store-lede small { font:400 11px/1.5 var(--body); color:#9daa9b; }
+.superstore-card .gear-ownership-name .store-price { color:#ead56c; font:500 10px var(--mono); }
+.store-filter-count { color:#859486; font:500 10px var(--mono); }
+@media(max-width:660px) { .store-lede { padding:6px 8px; } .store-lede small { font-size:10px; } }
