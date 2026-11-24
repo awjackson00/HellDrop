@@ -433,3 +433,29 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline:2px solid v
   .tab-symbol { transition:none; }
   .type-tab:hover .tab-symbol { transform:none; }
 }
+
+/* HELLDROP silhouette tabs: AR-23 / P-2 / stratagem ball.
+ * Source art is versioned locally as SVG, so no network or font icon can break it.
+ */
+.type-tab { min-height:80px; }
+.tab-symbol { width:64px; height:38px; }
+.tab-symbol img {
+  display:block;
+  width:64px;
+  height:38px;
+  object-fit:contain;
+  max-width:none;
+  max-height:none;
+  filter:grayscale(1) brightness(.93);
+  transition:filter .16s ease;
+}
+.type-tab.active .tab-symbol img { filter:none; }
+.type-tab:hover .tab-symbol img { filter:grayscale(.2) brightness(1.04); }
+.type-tab.active:hover .tab-symbol img { filter:none; }
+@media (max-width:660px) {
+ .type-tab { min-height:70px; }
+ .tab-symbol,.tab-symbol img { width:52px; height:32px; }
+}
+@media (prefers-reduced-motion:reduce) {
+ .tab-symbol img {transition:none;}
+}
