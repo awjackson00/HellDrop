@@ -1,5 +1,7 @@
 # HELLDROP design principles
 
+For research-backed typography, motion, performance, accessibility, browser QA, and future-project practices, see [WEB_DESIGN_PLAYBOOK.md](./WEB_DESIGN_PLAYBOOK.md). Keep this file for HELLDROP-specific creative direction.
+
 This is the standard for future design work on HELLDROP. It translates the design-engineering, Impeccable and Taste ideas into decisions specific to this product, rather than copying any template.
 
 ## Product and audience
