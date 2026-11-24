@@ -364,3 +364,27 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline:2px solid v
 .superstore-card .gear-ownership-name .store-price { color:#ead56c; font:500 10px var(--mono); }
 .store-filter-count { color:#859486; font:500 10px var(--mono); }
 @media(max-width:660px) { .store-lede { padding:6px 8px; } .store-lede small { font-size:10px; } }
+
+
+/* Original HELLDROP hellpod/question-mark artwork, responsive brand treatment. */
+.topbar { min-height:110px; height:110px; }
+.brand { display:inline-flex; align-items:center; gap:0; flex:none; text-decoration:none; }
+.brand-logo { display:block; width:184px; height:auto; max-height:106px; object-fit:contain; transition:filter 160ms ease; }
+.brand:hover .brand-logo { filter:brightness(1.08); }
+@media (max-width:960px) {
+  .topbar { min-height:91px; height:91px; }
+  .brand-logo { width:152px; }
+}
+@media (max-width:660px) {
+  .topbar { min-height:75px; height:75px; gap:8px; }
+  .brand-logo { width:120px; }
+  .main-nav { gap:12px; }
+}
+@media (max-width:400px) {
+  .topbar { min-height:71px; height:71px; }
+  .brand-logo { width:110px; }
+  .main-nav { gap:9px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .brand-logo { transition:none; }
+}
