@@ -388,3 +388,48 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline:2px solid v
 @media (prefers-reduced-motion:reduce) {
   .brand-logo { transition:none; }
 }
+
+/* Category selector icon system: readable at actual device sizes.
+ * Wide rifle/sidearm silhouettes and a deployment-target stratagem glyph
+ * share one color, baseline and interaction language.
+ */
+.type-tab {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  min-height:76px;
+  padding:10px 4px 11px;
+  line-height:1.15;
+}
+.tab-symbol {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:52px;
+  height:34px;
+  flex:none;
+  opacity:.84;
+  transition:opacity .16s ease, transform .16s ease;
+}
+.tab-symbol svg {
+  display:block;
+  width:52px;
+  height:34px;
+  max-width:none;
+  max-height:none;
+  overflow:visible;
+  flex:none;
+}
+.type-tab:hover .tab-symbol,
+.type-tab.active .tab-symbol { opacity:1; }
+.type-tab:hover .tab-symbol { transform:translateY(-1px); }
+@media(max-width:660px) {
+  .type-tab { min-height:68px; padding:8px 3px 10px; gap:4px; font-size:11px; }
+  .tab-symbol, .tab-symbol svg { width:47px; height:30px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .tab-symbol { transition:none; }
+  .type-tab:hover .tab-symbol { transform:none; }
+}
