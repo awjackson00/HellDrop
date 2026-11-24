@@ -10,7 +10,7 @@ HELLDROP is a quick utility for Helldivers 2 players. The goal is to choose one 
 
 **Deployment Desk.** Dense where useful, spacious where it improves hierarchy. Industrial, functional, editorial, unmistakably inspired by Helldivers without impersonating an official game product.
 
-- **Typography:** Barlow Condensed for purposeful, compact headings; IBM Plex Sans for controls and body text; IBM Plex Mono only for tiny technical metadata and status. Limit unnecessary all-caps and tiny type.
+- **Typography:** Saira Semi Condensed (600–800) for compact industrial headings, Fira Sans (400–700) for legible controls and reading, and Azeret Mono only for technical metadata and status. Avoid default-template typography such as Inter/Poppins/Space Grotesk. Keep real game artwork visually dominant, and limit unnecessary all-caps, tiny labels, and decorative letterspacing.
 - **Color:** Dark near-neutral olive-charcoal surfaces with off-white text. Yellow is an action/selection color, not generic decoration. Use natural green-gray borders.
 - **Composition:** One clear primary action. Keep selection controls on the left and the generated loadout dominant on the right on desktop. Stack them in the same order on mobile.
 - **Containment:** Prefer spacing and thin dividers over boxes around boxes. Item thumbnails sit in unobtrusive frames. Stratagem tiles may use a single bounding surface to separate interactive slots.
