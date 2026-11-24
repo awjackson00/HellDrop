@@ -459,3 +459,55 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline:2px solid v
 @media (prefers-reduced-motion:reduce) {
  .tab-symbol img {transition:none;}
 }
+
+/* Actual game equipment art in category navigation.
+ * Weapon silhouettes are derived from the image transparency of game armory renders,
+ * rather than approximated vector drawings. The stratagem uses its real icon.
+ */
+.type-tab { min-height:76px; padding:6px 3px 10px; gap:5px; }
+.tab-symbol {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:98px;
+  height:48px;
+  max-width:100%;
+  overflow:visible;
+}
+.tab-symbol .category-art.weapon-render {
+  display:block;
+  width:98px;
+  height:48px;
+  max-width:100%;
+  object-fit:contain;
+  filter:brightness(0) invert(.76);
+  transition:filter .16s ease, transform .16s ease;
+}
+.tab-symbol .category-art.stratagem-render {
+  display:block;
+  width:44px;
+  height:44px;
+  object-fit:contain;
+  filter:grayscale(1) brightness(.91);
+  transition:filter .16s ease, transform .16s ease;
+}
+.type-tab:hover .category-art.weapon-render {filter:brightness(0) invert(1);}
+.type-tab.active .category-art.weapon-render,
+.type-tab.active:hover .category-art.weapon-render {
+  filter:brightness(0) saturate(100%) invert(82%) sepia(72%) saturate(702%) hue-rotate(350deg) brightness(103%) contrast(95%);
+}
+.type-tab:hover .category-art.stratagem-render,
+.type-tab.active .category-art.stratagem-render {filter:none;}
+.tab-symbol .category-art[hidden] {display:none;}
+.tab-symbol .tab-fallback {display:none; font:700 19px/1 var(--mono); letter-spacing:-.04em; color:currentColor;}
+.tab-symbol .category-art[hidden] + .tab-fallback {display:block;}
+@media (max-width:660px) {
+  .type-tab {min-height:70px; padding:5px 2px 8px; gap:3px;}
+  .tab-symbol {width:82px; height:42px;}
+  .tab-symbol .category-art.weapon-render {width:82px; height:42px;}
+  .tab-symbol .category-art.stratagem-render {width:40px; height:40px;}
+}
+@media (prefers-reduced-motion: reduce) {
+  .tab-symbol .category-art.weapon-render,
+  .tab-symbol .category-art.stratagem-render {transition:none;}
+}
